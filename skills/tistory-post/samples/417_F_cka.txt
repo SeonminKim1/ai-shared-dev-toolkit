@@ -1,0 +1,96 @@
+# 417 | [자격증] CKA 취득 후기 (26년 9월)
+# 유형: F. 자격증·시험 후기 | 카테고리: 회고 & 기록/기타 경험 & 트러블슈팅
+# https://yubi5050.tistory.com/417
+
+<h2>응시 배경
+<p>과거 도커를 처음배우고 한창 해메던 시절.. k3s 미니큐브로 구축된 서비스를 실무에서 처음 경험하며 SDK 연동해서 어케저케 플랫폼 서비스를 꾸역꾸역 만들던 시절이 있었는데, 이후 다음 회사에서는 직접 구축도 해보고 싶었지만? 기회가 없었다. 그러던 중 머릿속에서 기억이 완전히 사라지기 전에 한 번 지식 업데이트도 하고 싶었고, 앞으로도 계속 유망할 기술임은 뭐 확실해서, 자격증 시험 까지 도전하게 되었다. 개인적으론 예전이나 이번에도 느낀 거지만 웹프레임워크+도커 이정도만 만지다가, 쿠버를 경험해보면 약간 진짜 그 개발자 뽕?이 생기는? 약간 좀 그런 느낌이 있는 것 같다. (뭐랄까 좀 비약하면 우물안에 있다가 밖으로 나와서 처음 봤을 때의 느낌?)
+<p>
+<h2>CKA 시험 이란
+<p>CKA(Certified Kubernetes Administrator) 시험은 **쿠버네티스(Kubernetes) 클러스터를 관리, 운영 및 트러블슈팅할 수 있는 역량**을 검증하는 글로벌 공인 자격증 시험으로 오픈소스 재단인 CNCF(Cloud Native Computing Foundation)와 리눅스 재단(The Linux Foundation)이 공동으로 주관하는 시험이다. 클라우드 쪽 인프라나 관련 서비스 개발하는 사람들이 많이 취득하는 고런 자격증.
+
+  - <a https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/>리눅스 재단 CKA 시험 소개 링크</a>
+  - ⭐️ <a https://trainingportal.linuxfoundation.org/learn/dashboard>리눅스 재단 교육 및 자격증 관리 대시보드</a> // 자격증 시험을 **신청**하고 **관리**하는 개인 마이페이지
+<p>
+<h2>CKA 시험 특징
+<p>**시험 문제**
+
+  - 14 ~ 17문제 사이로 출제 (only 영어, 온라인 시험-외국인 감독관)
+  - 문제수가 많은 만큼 거의 유형별로 하나씩은 다 나온다고 보면됨
+  - ⭐️ 25년 2월 이후로 시험 문제가 개편되어 필요한 추가 학습 범위가 넓어졌음
+  - ⭐️ 특히 떠 돌아 다니는 글이나 강의 선택시 잘못 공부하게 될 수 있으므로 최신 정보인지 유심히 봐야함
+<p>**시험은 실습 시험**
+
+  - ⭐️ 쿠버 명령어들이 무조건 손에 익어야 함 x100
+  - ex) 문제 요구사항이 주어지면 <a https://kubernetes.io/docs/home/>공식 사이트</a>에서 해당 리소스 예제 코드를 찾아 복붙 하여 요구사항에 맞게 수정해서 실행하면 성공.
+  - ex) 또는 실행중인 리소스를 직접 수정하여, 요구사항에 맞게 동작하면 성공. 최종 잘 돌아가고 있는지 체크하는 것 필수
+<p>**시험 환경**
+
+  - 시험 환경 체크 과정에서 외국인 감독관과 가벼운 채팅 대화 필요하다.<br>- ex. 주변 360도 보여줘, 유의사항 이해 했어? 저거 멀리 치워줘 등 <br>- 개인 생각) 감독관이 성향의 차이, 재량의 범위?가 약간 있는 것 같음. 질문의 답변을 이쁘게 해보는 것도.. (꼬투리 방지)
+  - ⭐️ 환경을 엄청 꼼꼼히 체크해서 최소 15분은 걸리므로 시험 시간 2시간 외 추가 시간을 여유롭게 확보 할 것
+  - 우분투 UI로 시험보는데 생각보다 화면이 넓진 않으므로 유의 (노트북 크기 정도로 연습하면 크게 어렵지 않을 듯)
+  - 쿠버네틱스 일부 단축키 kubectl -> k, 자동완성 기능 등은 이미 반영되어 있음
+  - ⭐️ 복붙 : 복사는 문제 지문 클릭하면 자동 복사됨. 문서 복사 및 터미널에 붙여넣기 할 때는 단축키(Control + Shift + C,V) 안 쓰고 **맥 기준** 두손 클릭(오른쪽 마우스)로 하였음
+<p>**⭐️ 시험 등록/재시험 기회**
+
+  - 시험 예약시 모의고사 2회 제공됨 (<a https://killer.sh/>killer.sh</a>), 시험에서 떨어지면 1회 기회를 더 줌 (총 2회 응시 가능)
+  - 모의고사 <a https://killer.sh/>killer.sh</a>는 25년 2월 이후 시험에선 중요도가 높진 않은 듯
+  - ⭐️ 모의고사 <a https://killer.sh/>killer.sh</a>는 대신 시험 환경 체크용으로는 꼭 경험해보면 좋음.
+<p>**시험 비용 **
+
+  - 시험 비용은 약 50만원을 개인 돈으로 응시하기엔 부담이 크지만, 다행히도 상시 할인을 함
+  - 매년 12월 초 Cyber Monday가 가장 저렴 (50 ~ 60%)
+  - 분기별, 특정일 할인, 상시 할인 코드 등도 있음. (25 ~ 40%)
+  - <a https://lf.programmers.co.kr/exams>프로그래머스</a>에서 바우처 구입하는 것도 방법 (환율 방어 , 약 20%)
+  - ⭐️ 외국 강좌들(ex. 유데미)을 구매하면 할인권을 줌 (25 ~ 40%)
+  - 시험 할인 정보 모음 : <a https://github.com/techiescamp/linux-foundation-coupon>https://github.com/techiescamp/linux-foundation-coupon</a>
+<p>**⭐️ 시험 규정이 엄격함**
+
+  - 시험 등록간 규정 철저히 x100 읽어보고 점검 할 것
+  - ⭐️ 신분 인증은 여권으로 인증하는게 속 편함 → 없다면 여권 발급 부터 할 것을 권장함
+  - TMI) 첫 시험시 신용카드 + 한글 주민등록증으로 인증하려다 실패 하여 시험도 못보고 쫓겨나 재시험 기회를 받았었음
+<p>
+<h2>시험 준비 (강의, 자료)
+<p>**⭐️ (필수, 추천, 유료 강의) <a https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/>(Udemy) 뭄샤드 - CKA with Practice Tests</a>**<br>
+
+  - <a https://kodekloud.com/>Kodekloud</a>라는 실습 환경 제공해주는게 매우 도움됨.
+  - 또 단원마다 Lab 이라는 실습 문제도 제공해주어 명령어 익숙해지는데 매우 유용함
+  - 단 자막이 기계 자막이라, 노베이스일 경우 개념 학습에는 어려움이 있을 수 있음
+  - 자체 모의고사(Mock exam) 3편이 있는데 이 정도 난이도로 출제됨. 대부분 다 다회독 필수로 하는 듯
+<p>**⭐️ (추천, 유료 강의) <a https://www.inflearn.com/course/certified-kubernetes?cid=339687>(인프런) 일프로 - </a><a https://www.inflearn.com/course/certified-kubernetes?cid=339687>CKA Practical Exam Guide</a>**
+
+  - 한국인에게 맞는 가장 좋은 강의인 듯 보임
+  - 강사님이 운영하는 네이버 카페가 매우 잘되어 있고 유용함
+  - 특히 <a https://cafe.naver.com/f-e/cafes/30725715/articles/950?menuid=64&referrerAllArticles=false&page=2>카페에 정리된/복원된? 시험 문제</a>의 많은 부분이 문제에서 유사하게 나오기도 해서 다회독 필수 추천
+  - 개인적으론 외국 시험이다 보니 시험 등록 ~ 응시 까지 주의할 점이 많았는데 많이 도움되었음. (<a https://cafe.naver.com/f-e/cafes/30725715/articles/950?boardtype=L&menuid=64&referrerAllArticles=false&page=2>링크</a>)
+<p>**⭐️ (필수, 무료 유투브 영상) <a https://www.youtube.com/watch?v=-6QTAhprvTo&list=PLkDZsCgo3Isr4NB5cmyqG7OZwYEx5XOjM>IT Kiddle CKA EXAM 2026</a>  **
+
+  - 시험 문제 복원된 약 17개의 문제를 풀이 해줌
+  - 애초에 문제수가 많은 것도 있지만, 넓은 공부 영역에 유형이 좁힐 수 있는 것 만으로도 굿
+<p>**⭐️ (필수, 무료) 블로그 모음**<br>****
+
+  - ⭐️ 자기 풀이랑 남들 풀이 겪은 거랑 비교하는데 사용하며, 여러 경우의 수를 대비
+  - <a https://5jyan.tistory.com/255>https://5jyan.tistory.com/255</a> // CKA 기출 문제 정리
+  - <a https://yunny-p.tistory.com/entry/CKA-%EC%8B%9C%ED%97%98-%EB%AC%B8%EC%A0%9C-%EC%A0%95%EB%A6%AC-1>링크주소 길어서 대체</a> // [CKA] 시험 문제 정리
+  - <a https://iwantbaobab.tistory.com/737>https://iwantbaobab.tistory.com/737</a> // 2026년 CKA 합격 후기
+<p>**(유료, 추천 보통) <a https://fastcampus.co.kr/dev_online_devops_kubernetes?gad_source=1&gad_campaignid=24270053242&gbraid=0AAAAADdsH6dIoHcbTRb1oDTHCFPH9w0Cu&gclid=CjwKCAjwifjVBhBKEiwAYx4K9BQgkJZ4LnEbDQdFkV-np4y6Q0gqY2S8-u9lbCW2sfpecJDG-MLd4xoC5GoQAvD_BwE>(패스트캠퍼스) 한 번에 끝내는 DevOps를 .. Kubernetes</a>**
+
+  - 강의가 23년? 24년? 이라 시험준비에는 다소 안 맞음.
+  - 단. 클러스터 직접 구축이나, 클러스터에 대한 환경 설명 강의자료 등이 매우 좋음.
+<p>
+<h2>준비 기간 및 방법 (+추천)
+<p>**준비 기간 및 방법******
+
+  - **(개념 정리 및 실습, 2주) : **공부 병행 목적이라, <a https://fastcampus.co.kr/dev_online_devops_kubernetes?gad_source=1&gad_campaignid=24270053242&gbraid=0AAAAADdsH6dIoHcbTRb1oDTHCFPH9w0Cu&gclid=CjwKCAjwifjVBhBKEiwAYx4K9BQgkJZ4LnEbDQdFkV-np4y6Q0gqY2S8-u9lbCW2sfpecJDG-MLd4xoC5GoQAvD_BwE>패캠 강의</a>를 들으며, 클러스터 환경을 직접 구축해 다뤄보며 개념 이해에 집중
+  - **(실습 및 숙달, 2주) : **<a https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/>유데미 - 뭄샤드 강의</a>의 설명은 대부분 짧고, 실습 문제(Lab)이 오래 걸리지만 빠른 숙달에 도움 매우 많이됨.
+  - **(시험 준비, 2주)**<br>- 유데미 - 뭄샤드 강의 내 모의고사 (Mock exam 3회) - 한 5번씩은 풀어 본 듯<br>- I<a https://www.youtube.com/watch?v=-6QTAhprvTo&list=PLkDZsCgo3Isr4NB5cmyqG7OZwYEx5XOjM>T Kiddle 유투브 영상</a> + 다른 사람 블로그 + <a https://cafe.naver.com/f-e/cafes/30725715/articles/950?menuid=64&referrerAllArticles=false&page=2>인프런 네이버 카페</a> 로 복원한 약 17개의 유형 문제에 대해서 시험 직전 까지 반복 연습<br>- 실제 기출 연습은 웹 Kodekloud에서 억지로 하거나, killer.sh 같은 곳에서 문제를 가정하고 환경을 뿌셔?가며 해봄.
+<p>
+<p>**개인적인 추천 방법**
+
+  - ⭐️ (경험해보진 않았지만) 개념, 실습,시험을 한 군데(<a https://www.inflearn.com/course/certified-kubernetes?cid=339687>**인프런 강의 커리큘럼**</a>)에 맞춰서 진행하는 것이 가장 괜찮지 않을까 싶음
+  - 기간은 빠르면 3~4주로 가능하지 않을까 싶음
+<p>
+<h2>시험 결과
+<p>시험은 응시 시간 ~ 제출 시간 으로 부터 24시간 이내에 나온다.
+<p>
+[IMG]
+<p>

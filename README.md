@@ -42,6 +42,30 @@ hooks/                     # → .claude/hooks/...
 
 - 사용: `/learning-examples <라이브러리>` 또는 "`<라이브러리>` 학습용 예제 만들어줘"
 
+### tistory-post
+소재(.md/PDF)를 주면 "잉여개발자" 블로그 문체·서식에 맞춘 티스토리 기본모드 붙여넣기용 본문을
+만든다. 업로드는 직접 한다. 작업 폴더(프로젝트 루트)에 `topics/`, `posts/`를 쓴다. macOS 전용
+(`open`, `pbcopy`, `osascript` 사용).
+
+- 사용: `topics/`에 소재를 넣고 `/tistory-post <slug>` 또는 "글 써줘"
+- 소재 형식은 자유. 선택 항목을 적으면 그대로 반영 (`유형`을 안 적으면 쓰기 전에 물어봄):
+  ```markdown
+  유형: 개념 / 실습 / 프로젝트 회고 / 개선기 / 트러블슈팅 / 자격증 후기 / 세미나·전시회 후기 / 요약 / 자료 공유
+  카테고리: 개념 정리 / 개발 지식 정리
+  제목: [키워드] 원하는 제목
+  참고 링크: https://...
+  ```
+- 소재 위치: 한 번에 끝나는 글은 `topics/<slug>.md`. 나눠서 줄 글은 `topics/<slug>/01.md`, `02.md` …를
+  추가하고 "소재 추가했어". PDF도 같은 폴더에 넣으면 됨 (요약은 `_digest.md`에 남아 재사용).
+- 결과물: `posts/<slug>/post.html`(본문), `meta.md`(제목 후보·카테고리·태그·TODO). 생성 후 미리보기가
+  열리고 `복사` 버튼 → 티스토리 **기본모드**에 Cmd+V
+- 스크립트 (프로젝트 루트에서 실행):
+  ```sh
+  .claude/skills/tistory-post/scripts/preview.sh <slug>        # 미리보기 다시 열기
+  .claude/skills/tistory-post/scripts/copy.sh <slug>           # 바로 복사 (= "복사해줘")
+  .claude/skills/tistory-post/scripts/copy.sh --html <slug>    # HTML 소스 복사 → HTML 모드에 붙여넣기 (h2 스타일 유지)
+  ```
+
 ## Hooks
 
 (아직 없음)

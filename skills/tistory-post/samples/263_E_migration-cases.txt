@@ -1,0 +1,132 @@
+# 263 | [DB, Django] Migration 이슈 해결 모음
+# 유형: E. 트러블슈팅 - 사례 모음형 | 카테고리: 회고 & 기록/기타 경험 & 트러블슈팅
+# https://yubi5050.tistory.com/263
+
+<h2>migration 이슈 발생시 주로 파악해야 될 연관 부분
+<p>migration 이슈는 각 개별 환경마다 특수하기 때문에, django에서 특정 DB에 migrations시 어떤 과정으로 반영되는지 직접 이해하는 것이 트러블 슈팅이나 디버깅에 좋다.
+  - django의 migrations/ 내 migrations 파일들
+  - DB의 django_migrations 테이블 히스토리
+<p>
+<h2>사례 1 - 모델이 해당 DB에 없다고 나오는 경우
+<p>👉 오류 메시지
+<p>table ~ does not exist
+<p>👉 사례 / 해결방법
+<p>1) migration 파일이 없어서 안생겼을 경우
+<p>- django의 migration 파일이 잘 생성되었는지 확인 (django makemigrations 시 migrations/__init__.py가 있는지 등)
+<p>2) migration에는 있는데, DB에는 없는 상황
+<p>- migrate 후 테이블이 지워졌거나 (다른 개발자가 DB connection에서 지웠는데 migrate를 안남겼거나..)
+<p>- DB의 django_migrations 테이블 히스토리에서, 로컬에 가진 해당 migration 파일과 비교 (**해당 Table에 대한 migrations 이 가진 migrations 파일과 달랐을 경우일 가능성이 큼)**
+<p>
+<h2>사례 2 - 모델이 이미 해당 DB에 있다고 나오는 경우
+<p>👉 오류 메시지
+<p>table ~ already exists
+<p>👉 사례 / 해결방법
+<p>1) 로컬에서 생성한 migration 파일이 db migration 히스토리 테이블과 내용이 다를 경우
+<p>- Fake-initials -> db가 inital migration 파일들을 스킵한다.
+<p>
+<h2>사례 3 - migration 간 충돌 일어날 때
+<p>👉 오류 메시지
+<p>다양함
+<p>👉 사례 / 해결방법
+<p>1) A 앱의 테이블을 B앱의 테이블 하위로 옮길 때
+<p>- A앱의 데이터 백업 (데이터 복제, 다운로드 등)
+<p>- 해당 A앱의 테이블을 drop 하는 migrations 생성 후 migrate 반영
+<p>- 해당 B앱의 테이블에 create 하는 migrations 생성 후 migrate 반영
+<p>2) migration은 정상적으로 완료 되었는데, 테이블에 필드가 없다고 뜰 때
+<p>- db migration에 반영된 것 (002), 로컬에 가지고 있는 것 (002)이 넘버링은 같지만 내용이 차이가 날 경우
+<p>- db의 db_migration table의 history(row)를 지운 후 다시 migration
+<p>최후의 수단으로.. db에 직접 접근해 field등을 생성
+<p>
+<h2>사례 4 - default 값 입력 옵션 선택 요구 할 때
+<p>👉 오류 메시지
+<p>[default: timezone.now] >>>
+<p>It is impossible to add the field 'created_at' with 'auto_now_add=True' to mediaaddress without providing a default. This is because the database needs something to populate existing rows.
+<p> 1) Provide a one-off default now which will be set on all existing rows
+<p> 2) Quit and manually define a default value in models.py.
+<p>👉 사례 / 해결방법
+<p>1) 모델에 created_at 필드를 추가 하고 migrate를 실행시 기존 데이터에는 어떻게 할지에 대한 선택 옵션이 나옴
+<p>모델에서 null=True 로 설정하고 migrate를 진행해 해당 선택 옵션을 스킵한다.
+<p>created_at 필드는 기본적으로 null이 되지만 auto_now_add=True 옵션 때문에 자동으로 값이 채워진다.
+<p>
+<h2>사례 5 - db의 migrate 이력 rollback 또는 초기화 하고 싶을 때
+<p>👉 사례
+<p>db에 migrate를 했는데, migrate 내역을 지우고 싶을 때 (특정 migrations 시점으로 rollback)
+<p>👉 방법
+<pre>
+# 0003 시점의 migrate로 db 반영내역을 삭제해줌
+python manage.py migrate <app_name> <migratinos 4자리 번호>
+python manage.py migrate user 0003
+
+# 모든 마이그레이션 내역 초기화
+python manage.py migrate slots zero
+</pre>
+<p>👉 유의사항
+<p>그냥 django_migrations table (db)의 내역만 삭제 되는 것.
+<p>수동으로 히스토리 내역을 사용해줘도 됨. 단 종속성을 띌 수 있으니 그걸 돌리는 것
+<p>유용할지는 잘 모르겠넹.
+<p>
+<h2>사례 6 - db의 migration 파일들 squash 하고 싶을 때
+<p>👉 사례
+<p>migrations 파일들을 squash 해서 보관하고 싶을 때
+<p>👉 방법
+<pre>
+# 0001 부터 0005 까지 squash
+python manage.py squashmigrations <app_name> <시작 migration 번호> <마지막 migration 번호>
+ex) python manage.py squashmigrations user 0001 0005
+</pre>
+<p>👉 유의사항
+<p>그냥 django_migrations 파일들을 squash 하고 싶을 때
+<p>묶고서 기존의 migrations 파일들을 삭제
+<p>잘 못 묶었다가는 dependency 충돌이 날 수 있음
+<p>👉 결론
+<p>쓸만한 경우가 어느 특정 시점에 migrations 파일 관리하기 위해
+<p>어차피 실제 django_migrations/ 테이블에는 0001~0005 까지 생기고, squash 내역까지 생김
+<p>단순 파일 하나로 관리 목적
+<p>
+<h2>사례 7 - 테이블명 or 필드명 변경
+<p>👉 사례
+<p>테이블 이름이나 필드명 변경시
+<p>**Was the model <모델/필드명> renamed to <바꿀모델/필드 명>? [y/N] **
+<p>물어보는 경우 자동으로 생략하고 싶을 때
+<p>👉 방법
+<pre>
+# 자동으로 yes 라고 응답 -> 테이블/필드 가 수정됨
+yes y | python3 manage.py makemigrations
+
+# 자동으로 n 이라고 응답 -> 테이블/필드 가 삭제 후 생성됨 (데이터 보존 x)
+yes n | python3 manage.py makemigrations
+
+# (위 no와 같음) 자동으로 n 이라고 응답 -> 테이블/필드 가 삭제 후 생성됨 (데이터 보존 x)
+python3 manage.py makemigrations --noinput
+</pre>
+<p>👉 유의사항
+  - 왜 rename등을 물어볼까? -> django migration 설계시 이름을 **바꾸는 행위가 db의 데이터에 영향을 줄 수 있는 행위로 생각**되어 그러한 것들에는 항상 물어보는 것
+  - **yes n | python3 manage.py makemigrations** => 테이블/필드 가 삭제 후 생성됨 (데이터 보존 x)
+  - **yes y | python3 manage.py makemigrations** => 테이블/필드 가 수정 됨 (데이터 보존 o)
+  - [https://b0uh.github.io/django-model-change-field-name-with-no-db-impact.html
+<p>👉 결론
+<p>데이터를 보존해야 한다면 물음에 y로, 필요 없으면 n이나 --noinput으로
+<p>
+<h2>사례 8 - DB RDS 마이그레이션
+  - RDS → 다른 RDS 로 데이터 이전 미션 (물리 이동)
+  - 로컬에서 RDS (A)의 db를 dump 파일을 다운로드 받고, 원하는 RDS(B) 에 import 한다
+  - DB가 사용중이라면 다른 방법을 사용해야 함. (레거시 정리 목적 관련만 유효)
+<pre>
+# 1. dump 뜨기
+mysqldump \
+  -h db-cluster.cluster-<백업하는 db의 host 주소>.ap-northeast-2.rds.amazonaws.com \
+  -u <your user> \
+  -p'<your password>' \
+  --set-gtid-purged=OFF \
+  --single-transaction \
+  <my_schema_name> > migration_db.sql
+
+# 2. import 하기
+mysql \
+  -h db-cluster.cluster-<이전할 db의 host 주소>.ap-northeast-2.rds.amazonaws.com \
+  -u <your user> \
+  -p'<your password>' \
+  <new_my_schema_name> < migration_db.sql
+</pre>
+<p><h2>참고 문헌
+  - [https://docs.djangoproject.com/en/5.0/topics/migrations/ // django 공식 문서

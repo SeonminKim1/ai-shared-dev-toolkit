@@ -1,0 +1,225 @@
+# 418 | 저장소와 모듈 (ft. 모노레포/멀티레포/모노리스)
+# 유형: A. 개념 정리 (번호형, 비교 표) | 카테고리: 개념 정리/개발 지식 정리
+# https://yubi5050.tistory.com/418
+
+<h2>저장소(repository) + 모듈 (module) 조합
+프로젝트를 어떻게 쪼개고 묶느냐에 따라 다음 조합이 나옴
+<table style12>
+ |
+ 구조 |
+ 설명 |
+ 장점 |
+ 단점 |
+ |
+ 모노레포 (Monorepo) + 멀티모듈 |
+ **하나의 Git 저장소**에 여러 모듈을 넣는 방식 |
+ 코드 공유 쉬움, 히스토리 관리 일원화 |
+ common이 비대해짐, CI/CD 빌드 시간 길어짐 |
+ |
+ 멀티레포 (Multirepo) + 멀티모듈 |
+ **여러 개의 Git 저장소**에 각각 모듈을 쪼개는 방식 |
+ 팀별 독립성이 극대화, 강제 격리 가능 |
+ 코드 공유시 패키지 배포 필요, 버전 관리 절차 복잡 |
+ |
+ 모노리스(Monolith) |
+ **하나의 저장소에 통짜**(하나의 모듈) 개발 |
+ 초기 개발 속도 압도적 빠름 |
+ 규모 커지면 스파게티 코드됨, 확장에 어려워짐 |
+<p>자바(Java) 는 빌드 시스템(Gradle, Maven)을 이용
+파이썬은 uv나 Poetry 같은 기능을 통해 모노레포와 멀티모듈을 매우 강력하고 정교하게 제어 가능함
+<p>
+<h2>(Python) 1. 모노레포 + 멀티모듈
+<p>**  폴더 구조**
+<p>(uv Workspace) 하나의 저장소 안에서 가상환경을 공유하며, 서비스들이 로컬 경로(path)로 공통 모듈을 참조
+<pre>
+my-monorepo/
+├── pyproject.toml              # [루트] 워크스페이스 관리
+├── libraries/
+│   └── core-db/                # [공통 모듈] DB 연결 및 모델
+│       ├── pyproject.toml
+│       └── src/
+└── services/
+    ├── user-api/               # [서비스 1] 사용자 API
+    │   ├── pyproject.toml
+    │   └── src/
+    └── order-api/              # [서비스 2] 주문 API
+        ├── pyproject.toml
+        └── src/
+</pre>
+<p>
+**⚙️ 설정 파일 모음 (.toml)**
+- 같은 폴더 내에서 상대경로 등 지정
+<pre>
+# ==========================================
+# 1. [루트] /pyproject.toml
+# ==========================================
+[tool.uv]
+workspace = { members = ["libraries/*", "services/*"] }
+# ==========================================
+# 2. [공통 모듈] /libraries/core-db/pyproject.toml
+# ==========================================
+[project]
+name = "core-db"
+dependencies = ["sqlalchemy>=2.0.0", ...]
+# ==========================================
+# 3. [서비스 1] /services/user-api/pyproject.toml
+# ==========================================
+[project]
+... (코드 12줄 생략)
+</pre>
+<p>
+<h2>(Python) 2. 멀티레포 + 멀티모듈
+서비스들과 공통 모듈이 **완전히 분리된 3개의 독립된 Git 저장소.** 서비스들이 **공통 모듈의 원격 git 주소**를 바라봄
+**  폴더 구조 (3개의 독립된 Git 저장소)**
+<pre>
+[저장소 1: core-db-repo]         # 공통 모듈 저장소
+├── pyproject.toml
+└── src/
+[저장소 2: user-api-repo]        # 서비스 1 저장소
+├── pyproject.toml
+└── src/
+[저장소 3: order-api-repo]       # 서비스 2 저장소
+├── pyproject.toml
+└── src/
+</pre>
+<p>
+**⚙️ 설정 파일 모음**
+<pre>
+# ==========================================
+# 1. [공통 모듈] core-db-repo/pyproject.toml
+# ==========================================
+[project]
+name = "core-db"
+dependencies = ["sqlalchemy>=2.0.0",]
+# ==========================================
+# 2. [서비스 1] user-api-repo/pyproject.toml
+# ==========================================
+[project]
+name = "user-api"
+dependencies = ["fastapi>=0.115.0","core-db"]
+[tool.uv.sources] # 공통 git주소임
+core-db = { git = "https://github.com/share", branch = "main" }
+# ==========================================
+... (코드 8줄 생략)
+</pre>
+<p>
+<h2>(Python) 3. 모노리스 (Monolith)
+하나의 저장소, 하나의 설정 파일만 존재합니다. 내부 폴더 구조를 나누어 직접 로컬 import로 참조
+**  폴더 구조**
+<pre>
+my-monolith/
+├── pyproject.toml              # 전체 의존성 통합 관리
+└── src/
+    ├── database/               # 공통 기능 폴더
+    ├── users/                  # 사용자 도메인 폴더 (서비스 1 역할)
+    └── orders/                 # 주문 도메인 폴더 (서비스 2 역할)
+</pre>
+<p>
+**⚙️ 설정 파일 모음**
+<pre>
+# ==========================================
+# 1. [통합 루트] /pyproject.toml
+# ==========================================
+[project]
+name = "my-monolith"
+# 서비스들과 공통 기능의 의존성을 한데 묶음
+dependencies = ["fastapi>=0.115.0","sqlalchemy>=2.0.0"]
+</pre>
+<p>
+<h2>(Java) 1. 모노레포 + 멀티모듈 (Gradle Multi-Project)
+하나의 저장소 안에서 루트 설정(settings.gradle)이 하위 프로젝트들을 묶어주고, **서비스들이 로컬 경로로 공통 모듈**을 참조
+**  폴더 구조**
+<pre>
+my-java-monorepo/
+├── settings.gradle             # [루트] 전체 하위 모듈 정의 및 관리
+├── build.gradle                # [루트] 공통 플러그인 및 버전 정의
+├── libraries/
+│   └── core-db/                # [공통 모듈] DB 연결 및 JPA Entity
+│       └── build.gradle
+└── services/
+    ├── user-api/               # [서비스 1] 사용자 Spring Boot 앱
+    │   └── build.gradle
+    └── order-api/              # [서비스 2] 주문 Spring Boot 앱
+        └── build.gradle
+</pre>
+<p>**⚙️ Gradle 설정 파일 모음**
+<pre>
+// ==========================================
+// 1. [루트 감지 파일] /settings.gradle
+// ==========================================
+rootProject.name = 'my-java-monorepo'
+// 하위 폴더(모듈) 구조를 Gradle 시스템에 등록합니다.
+include 'libraries:core-db'
+include 'services:user-api'
+include 'services:order-api'
+// ==========================================
+// 2. [루트 빌드 파일] /build.gradle
+// ==========================================
+plugins {id 'org.springframework.boot' version '3.4.0' apply false, ...}
+// 모든 하위 서브모듈에 공통으로 적용할 자바 기본 세팅
+subprojects {
+    group = 'com.example'
+... (코드 39줄 생략)
+</pre>
+<h2>(Java) 2. 멀티레포 + 멀티모듈 (사내 Nexus, Maven Central 참조)
+**  폴더 구조 (3개의 독립된 Git 저장소)**
+<pre>
+[저장소 1: core-db-repo]         # 공통 라이브러리 저장소
+└── build.gradle                # [Gradle] 사내 저장소로 jar 배포 설정
+[저장소 2: user-api-repo]        # 서비스 1 저장소
+└── build.gradle                # [Gradle] 사내 저장소에서 jar 다운로드
+[저장소 3: order-api-repo]       # 서비스 2 저장소
+└── build.gradle                # [Gradle] 사내 저장소에서 jar 다운로드
+</pre>
+<p>
+**⚙️ Gradle 설정 파일 모음**
+<pre>
+// ==========================================
+// 1. [공통 모듈 빌드 파일] core-db-repo/build.gradle
+// ==========================================
+plugins {
+    id 'java-library'
+    id 'maven-publish' // 사내 사설 패키지 서버(Nexus)로 밀어넣는 플러그인
+}
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.4.0'
+}
+// 빌드된 .jar 파일을 사내 원격 넥서스 서버로 배포하는 명세
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+... (코드 44줄 생략)
+</pre>
+****
+<p>
+<h2>(Java) 3. 모노리스 (Java Single Project)
+**  폴더 구조**
+<pre>
+my-java-monolith/
+├── build.gradle                # [Gradle] 단 하나의 단일 빌드 파일
+└── src/main/java/com/example/
+    ├── database/               # 공통 패키지 폴더
+    ├── users/                  # 서비스 1 패키지 폴더
+    └── orders/                 # 서비스 2 패키지 폴더
+</pre>
+**⚙️ Gradle 설정 파일 모음**
+<pre>
+// ==========================================
+// 1. [통합 단일 빌드 파일] /build.gradle
+// ==========================================
+plugins {
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    // 서비스들과 공통 기능이 필요로 하는 모든 외부 의존성을 여기서 몰아서 관리
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+... (코드 1줄 생략)
+</pre>
+<p>

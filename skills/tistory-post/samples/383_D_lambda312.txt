@@ -1,0 +1,138 @@
+# 383 | [AWS Lambda] Python 3.12 전환과 배포 환경 개선기
+# 유형: D. 개선기·적용기 | 카테고리: 회고 & 기록/프로젝트 경험기
+# https://yubi5050.tistory.com/383
+
+<h2>개요
+<p>구글 OCR API를 호출 후 결과를 응답 해 주는 aws lambda 서비스를 내부적으로 관리중이였다.
+<p>AWS Lambda의 Python 3.11 미지원으로 **Python 3.12로의 마이그레이션이 필요**해졌고,
+<p>겸사겸사 기존에 다소 **복잡한 구조/배포 환경의 관리 어려움이 있었던 부분도 같이 개선**하기로 하였다.
+<p>최종 다음과 같은 목적으로 진행하였다.
+
+  - **비즈니스 로직은 수정 X** -> 수정시 점검 비용이 너무 커짐
+  - 인프라 배포 방식 **(AWS SAM)은 유지**
+  - **빌드 파이프라인과 배포 환경 위주**로의 관리 편의성 개선이 주 목적 부분
+<p>
+<h2>기존  구조의 한계
+<p>**기존 배포 환경**
+
+  - 코드 푸시 후 CI 진행
+  - Jenkins (x86_64 아키텍쳐, Python 3.11 버전이 설치된 환경) 에서 빌드한다.
+  - lambda layer에 넣을 압축 .zip 파일이 생성된다. (3개의 zip 파일이 -> 3개의 labmda layer로 배포된다.)
+  - 라이브러리 종속 문제 때문에 lambda는 arm64 아키텍쳐로만 배포한다.
+<p>**요약 및 문제점**
+
+  - Jenkins(x86_64) → sam build → lambda Layer(Zip) → Lambda(arm64)로 매우 복잡하게 관리되고 있었다.
+  - 2. 에서 빌드 환경(Jenkins)에 Python을 설치해서 빌드 하다 보니, **빌드 환경의 버전도 같이 관리해주어야 하는 문제점**이 있었다.
+  - 3. 에서 zip 파일로 배포시 **layer별 크기가 제약**이 있어 3개로 쪼갤 수 밖에 없었다.
+  - 3. 에서 layer는 총 3개로 (pydantic-layer, ocr-layer, fastapi-layer) **각 layer 서로 간의 호환 관리도 비용**이었다.
+  - 3. 에서 특히 pydantic 패키지내 라이브러리의 사용 버전이 올라감에 따라, **x86_64 환경 (+Python 3.11)이 제약**이 있었고, 수동 컴파일로 따로 빌드하는 것이 필요했다. (pydantic-layer 빌드 이유)
+  - 3. 에서 ocr-layer는 다른 구글 라이브러리 등의 혼용으로 패키지 크기가 커져서 분리됨
+  - 4. arm64로 밖에 배포될 수 밖에 없었음 (실제 arm64와, x86_64간에는 패키지 빌드 최소 버전이 상이하다)<br>ex) pydantic 패키지(pydantic-core)는 최소 glibc 2.26 환경 빌드가 필요, x86_64는 최소가 2.28 / arm64는 최소 2.17 호환이였다. 즉 Python 3.11 버전 + 패키지 요구사항으로는 arm64 아키텍쳐 환경에서 밖에 배포될 수 밖에 없었다.
+  - 이 외에도 복잡도를 가지게 된, 구현 당시의 여러 배경과 히스토리는 더 있음
+  - 장기적으로 잘 관리 될 수 있게, 구조를 이번에 단순화 하는 것이 목표!
+<h2>
+<h2>변경된 구조
+<p>**변경된 배포 환경**
+
+  - 코드 푸시 후 CI 진행
+  - Jenkins (docker image) 에서 빌드한다.
+  - lambda layer에 넣을 docker image 파일이 생성된다. (1개의 이미지 파일이 -> 1개의 labmda layer로 배포된다.)
+  - lambda는 x86_64 아키텍쳐로 배포한다. (사실 arm64 아키텍쳐로도 배포 가능하며, 무관함)
+<p>
+<p>**요약 및 설명**
+
+  - Jenkins(x86_64) → sam build → docker image → Lambda(x86_64)로 변경됨
+  - 2. 에서 빌드 환경(Jenkins)에 Python 설치 필요 없으며, 관리 할 필요도 없게 변경
+  - 3. 에서 불필요 라이브러리들을 경량화하여 docker image 1개의 layer로 구성함<br>- 애초에 docker 로 배포시 지원 크기가 훨씬 큼
+  - 4. 에서 파이썬 버전을 3.12 이미지로 교체하여, 낮은 파이썬 버전 + 아키텍쳐 제약으로 인한 pydantic 수동 빌드 이슈 삭제
+<p>
+<h2>변경된 구조 (표)
+<table >
+ |
+   |
+ 변경 전  |
+ 변경 후 |
+ 특징, 개선 |
+ |
+ 코드 |
+ fastapi |
+ fastapi |
+ 변경 없음 |
+ |
+ 배포 방식  |
+ aws sam |
+ aws sam |
+ 변경 없음 |
+ |
+ 버전 지정 |
+ Jenkins Python 버전 종속 |
+ Dockerfile FROM 한 줄로 독립 |
+ 빌드 환경 관리 종속 제거 |
+ |
+ 배포 방식 |
+ zip 3개 + Layer 3개 |
+ Container Image |
+ 불필요 패키지 제거로 경량화<br>aws lambda 3.12 전용 이미지 사용하여 콜드 스타트에도 이점 |
+ |
+ 아키텍처 |
+ arm64 필수 |
+ x86_64 (arm64도 상관 X) |
+ python 3.12 에서 상관 X |
+ |
+ pydantic 수동 컴파일 |
+ 필요 (Jenkinsfile에 별도 스테이지) |
+ 불필요 (알아서 적당한 wheel 설치됨) |
+ python 3.12 에서 상관 X |
+<p>
+<h2>기타 트러블 슈팅 및 이슈
+<p>**1. 구 ocr 서비스 관리 어려움**
+
+  - 구 ocr은 계층 (layer) 여러개를 사용하였다 (fastapi-layer, pydantic-layer, ocr-layer)
+  - ex) 만약 버전의 업데이트로 layer의 버전이 올라간다면 <br>1. fastapi-layer : 13  |  pydantic-layer : 42  |  ocr-layer : 25   <- 정상운영<br>2. fastapi-layer : 13  |  pydantic-layer : 43  |  ocr-layer : 26  <- 정상운영<br>3. fastapi-layer : 13  |  pydantic-layer : 44  |  ocr-layer : 26  <- 서비스 에러 발생
+  - 기능 업데이트 후 → 버전 조합 깨짐 → 버전 수동으로 맞춰서 롤백 → 되는 조합 탐색 및 수정  → 많은 비용 소모
+<p>**2. 완성 후 sam 배포 간 in-place-upgrade 제약**
+
+  - 최종 변경 후 교체를 하려고 하였다.
+  - 기본적으로 aws sam으로 관리시 aws 인프라가 자동으로 교체되고, 실패시 롤백이 된다 (아래 사진)
+  - 처음에 in-place-upgrade 가 되길 기대했지만, 변경사항이 많아 교체는 어려웠고 계속 롤백 에러가 발생하였다.
+  - 그래서 ocr-v2 의 lambda 를 새로 만들어 교체하는 식으로 진행하였다.
+<p>
+[IMG]aws sam deploy rollback 사진
+<p>**3. lambda function 배포 후 update 가 안되는 문제**
+
+  - 여러 리소스 중 lambda function이 update 가 안되는 문제가 발생하였다. (코드만 한참 수정...)
+  - 구성은 lambda는 이미지를 가져오는 aws-ecr의 latest 라는 태그의 이미지를 바라보게 하였음
+  - 원인 : 매번 ecr에 latest 태그로 배포 하다보니, latest 태그 의 이름이 같다보니 function에서 바뀜을 인지를 못하는 것이였다.
+  - 그러다 보니 실제 리소스 업데이트를 안하는 문제가 발생하였다.
+  - 아래는 sam ecr tag
+<pre>
+  # sam - template.yaml
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Architectures: [x86_64]
+      FunctionName: !Ref FuncName
+      PackageType: Image
+      ImageUri: !Sub
+        - "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/ive-ocr/${EcrRepo}:latest"
+</pre>
+<p>**해결 : lambda function 업데이트 절차 명시적으로 추가 **
+<p>일반적으로 그래서 ecr 태그를 hash로도 한다고 한다.
+<pre>
+stage('sam deploy) {
+... 이떄 알아서 잘 업데이트 해줄줄 알았지.
+}
+# 람다 명시적 업데이트
+stage('Force Lambda Update') {
+            steps {
+                withAWS(credentials: "${AWS_CREDENTIALS}", region: "${REGION}") {
+                    sh '''#!/bin/bash
+                    # --publish: 새 Lambda 버전 번호를 생성해 배포 이력 추적 가능하게 함
+                    aws lambda update-function-code \
+                        --function-name ${STACK_NAME} \
+                        --image-uri ${ECR_REGISTRY}/${ECR_REPO}:latest \
+                        --publish
+                    # 이미지 반영이 완료(LastUpdateStatus: Successful)될 때까지 대기
+                    # 완료 전에 파이프라인이 Success 처리되는 것을 방지
+... (코드 6줄 생략)
+</pre>

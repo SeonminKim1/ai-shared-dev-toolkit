@@ -1,0 +1,68 @@
+# 374 | [트러블슈팅] Django Migration rename 감지로 인해 CI가 멈춘 문제
+# 유형: E. 트러블슈팅 (단일 원인) | 카테고리: 회고 & 기록/기타 경험 & 트러블슈팅
+# https://yubi5050.tistory.com/374
+
+<h2>🧩 문제 상황
+<p>Jenkins 환경에서 migration 자동화를 구성하던 중,<br>Django migration 단계에서 빌드가 멈추는 문제가 발생했다.
+<p>문제 상황은 단순했다.
+<pre>
+updated_at → action_at
+</pre>
+<p>처럼 필드명을 변경한 뒤:
+<pre>
+python manage.py makemigrations
+</pre>
+<p>를 수행했는데,
+<p>CI 환경에서 프로세스가 종료되지 않았다.
+<p>
+<h2>🚨 원인 분석
+<p>필드명을 변경하는 경우, migration 도구 들은 '변경'인지, '기존 컬럼 삭제' + '신규 컬럼 생성'인지 알 수가 없다.
+<p>그래서 Django migration은 rename 상황에서 자동으로 판단하지 않고 질문을 한다.
+<pre>
+Was this field renamed? [y/N]
+</pre>
+<p>여기서:
+
+  - Y → rename / alter 처리
+  - N → 기존 컬럼 삭제 + 신규 컬럼 생성
+<p>으로 동작한다.
+<p>문제는 Jenkins 같은 CI 환경에서는 interactive input을 받을 수 없다는 점이었다.
+<p>다른 옵션 중 아래
+<pre>
+--noinput
+</pre>
+<p>옵션은 자동으로 N 처리 (기존 컬럼 삭제 + 신규 컬럼 생성) 되기 때문에,
+<p>의도치 않게 create/delete migration이 생성될 수 있었다.
+<p>
+<h2>🛠 해결
+<p>최종적으로는 아래 파이프 방식으로 처리했다.
+<pre>
+yes y | python manage.py makemigrations
+</pre>
+<hr style1>
+<h2>
+<h2>📌 Django vs Alembic(FastAPI) Migration 차이
+<p>이번 이슈를 통해 Django migration과 Alembic의 차이도 체감하게 되었다.
+<h3>Django Migration
+
+  - rename 어느 정도 자동 감지
+  - interactive 기반 질문 존재
+  - 자동화 수준 높음 (약 semi-auto-migration 느낌)
+<p>
+<h3>Alembic(FastAPI)
+<p>반면 Alembic은:
+<pre>
+alembic revision --autogenerate
+</pre>
+<p>를 사용해도 rename 자동 감지가 약한 편이다.
+<p>그래서 보통:
+<pre>
+op.alter_column(...)
+</pre>
+<p>같은 migration 코드를 직접 수정하게 된다.
+<p>대신 interactive prompt는 거의 없어서 CI 환경에서는 단순한 편이었다.
+<p>
+<h2>🔥 한 줄 요약
+<p>Django migration은 auto성의 위한 interactive prompt를 제공한다.
+<p>fastapi migration은 alembic 에서 확인하기 어렵고, 직접 migration 변형 코드를 참고 해보아야 한다.
+<p>

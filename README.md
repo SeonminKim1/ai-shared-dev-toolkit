@@ -1,12 +1,17 @@
 # ai-shared-dev-toolkit
 프로젝트 간 서브모듈로 공유 사용하는 AI 개발 자산(Hooks, Skills 등) 모음
 
+| 자산 | 종류 | 한 줄 설명 |
+|---|---|---|
+| [learning-examples](#learning-examples) | Skill | 새 라이브러리 학습용 예제(`ex1`, `ex2` …)를 계획하고 단계별로 작성 |
+| [tistory-post](#tistory-post) | Skill | 소재로 "잉여개발자" 티스토리 붙여넣기용 글 생성 (개인용, macOS) |
+
 ## 사용법
 
 저장소 루트가 그대로 `.claude/` 내용이 되도록 구성되어 있다.
 
 ```sh
-git submodule add <이 저장소 URL> .claude
+git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .claude
 
 # 업데이트
 git submodule update --remote .claude
@@ -65,6 +70,9 @@ hooks/                     # → .claude/hooks/...
   .claude/skills/tistory-post/scripts/copy.sh <slug>           # 바로 복사 (= "복사해줘")
   .claude/skills/tistory-post/scripts/copy.sh --html <slug>    # HTML 소스 복사 → HTML 모드에 붙여넣기 (h2 스타일 유지)
   ```
+- `topics/`, `posts/`는 실행한 프로젝트 루트에 없으면 자동 생성된다. 블로그 전용 저장소에서 쓰는 걸 권장하며,
+  그 저장소의 `.gitignore`에는 생성물인 `posts/*/preview.html`만 넣는다. 다른 프로젝트에서 쓸 땐
+  그 프로젝트의 `.gitignore`에 `topics/`, `posts/`를 추가한다.
 
 ## Hooks
 

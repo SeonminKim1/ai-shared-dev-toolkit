@@ -17,6 +17,17 @@ git submodule update --remote .claude   # 업데이트
 - 프로젝트 전용 지침은 `.claude/`가 아닌 루트 `CLAUDE.md`에 둔다
 - 자산 추가 규칙: [CONTRIBUTING.md](CONTRIBUTING.md)
 
+### 다른 프로젝트에서 개선해서 PR 보내기
+
+```sh
+cd .claude
+git switch -c improve/<내용>   # 브랜치 먼저 (안 하면 커밋 유실 위험)
+# 수정 후
+git commit -am "<설명>" && git push -u origin HEAD && gh pr create
+```
+
+머지되면 각 프로젝트에서 `git submodule update --remote .claude`로 반영.
+
 ## Skills
 
 ### learning-examples

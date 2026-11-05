@@ -18,7 +18,7 @@ description: spec-kit 기반 SDD의 첫 단계. 짧은 기능 설명으로 `spec
 
 ## 2. 새 기능: 디렉터리와 브랜치
 1. 설명에서 이름을 정한다: `<접두사>-<2~4단어>`(kebab-case, 접두사는 process.md "기능 디렉터리").
-2. 번호 `NNN`을 정하고 working tree가 깨끗한지 본다(아니면 묻는다). 최신 `main`에서 `NNN-<이름>` 브랜치를 만든다.
+2. 번호 `NNN`을 정하고 working tree가 깨끗한지 본다. `.claude` 서브모듈 포인터만 바뀌었으면 알리고 진행하고(따로 커밋), 그 밖의 변경이 있으면 묻는다. 최신 `main`에서 `NNN-<이름>` 브랜치를 만든다.
 3. `templates/spec.md`로 `specs/NNN-<이름>/spec.md`를 만든다.
 
 ## 3. spec 작성

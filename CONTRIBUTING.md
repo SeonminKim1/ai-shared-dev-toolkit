@@ -9,7 +9,7 @@
 ## 구조
 - `skills/<이름>/SKILL.md` — 스킬. frontmatter(`name`, `description`) 필수. `name`은
   디렉터리명과 같게, `description`에는 언제 써야 하는지(트리거)를 적는다.
-- `stacks/<stack>.md` — 언어·프레임워크별 코드 규칙. 소비 프로젝트 `CLAUDE.md`가 `@.claude/stacks/<stack>.md`로 import한다. 언어와 무관한 SDD 규칙은 `skills/sdd-feat/process.md`에 두고 여기에 다시 쓰지 않는다.
+- `stacks/<stack>.md` — 언어·프레임워크별 코드 규칙. 소비 프로젝트 `CLAUDE.md`가 `@.claude/stacks/<stack>.md`로 import한다. 언어와 무관한 SDD 규칙은 방식별 `process.md`(`skills/sdd-feat/`, `skills/sdd-speckit/`)에 두고 여기에 다시 쓰지 않는다. 스택 파일은 두 방식이 함께 쓰므로 한쪽 방식에만 맞는 문구를 넣지 않는다.
 - `settings.json` — 루트에 권한(allow/deny)만 둔다. 지금은 개인용이라 둔 것이며, 소비 프로젝트 설정과 충돌하므로 훅은 넣지 않는다.
 - `hooks/` — 공용 훅 스크립트. 루트 settings.json 대신 사용자 설정(`~/.claude/settings.json`)에 등록한다 (예: `auto-update.sh`).
 - 스킬 전용 훅은 루트 `settings.json` 대신 스킬 frontmatter(`hooks:`)에 등록하고, 스크립트는 `skills/<이름>/hooks/`에 둔다
@@ -25,4 +25,4 @@
   스킬 본문이 아니라 이 파일에 둔다.
 - 자산을 추가·변경하면 `README.md`의 해당 섹션(사용법)을 함께 갱신한다.
 - 문서와 스킬 본문은 한국어로 작성한다.
-- SDD 스킬은 모두 `sdd-` 접두사를 쓴다. 자체 방식은 `sdd-feat`(기능 진행)·`sdd-init-<stack>`(새 프로젝트), 다른 방식은 `sdd-<방식>-*`(예: spec-kit → `sdd-speckit-*`)으로 구분한다. 스택 파일(`stacks/`)은 방식과 무관하게 함께 쓴다.
+- SDD 스킬은 모두 `sdd-` 접두사를 쓴다. 자체 방식은 `sdd-feat`(기능 진행)·`sdd-init-<stack>`(새 프로젝트), 다른 방식은 `sdd-<방식>-*`(예: spec-kit → `sdd-speckit-*`)으로 구분한다. 스택 파일(`stacks/`)은 방식과 무관하게 함께 쓴다. 여러 스킬이 함께 쓰는 파일(방법론, 템플릿)은 `skills/sdd-<방식>/`에 SKILL.md 없이 둔다(예: `skills/sdd-speckit/`). upstream을 옮긴 자산은 출처와 라이선스를 그 디렉터리에 둔다(`LICENSE-spec-kit`).

@@ -5,10 +5,10 @@
 |---|---|---|
 | [learning-examples](#learning-examples) | Skill | 새 라이브러리 학습용 예제를 계획하고 단계별로 작성 |
 | [tistory-post](#tistory-post) | Skill | 소재로 티스토리 붙여넣기용 글 생성 (개인용, macOS) |
-| [feat](#sdd--feat-방식) | Skill | SDD(PRD → SPEC → PLAN → TASK → IMPLEMENT)로 기능 추가·수정. 언어 무관 |
-| [fastapi-init](#sdd--feat-방식) | Skill | 새 FastAPI 프로젝트 뼈대 생성 (`/feat` 전에 1회) |
-| [stacks/fastapi](#sdd--feat-방식) | Stack | FastAPI·Python 코드 규칙. 소비 프로젝트 `CLAUDE.md`가 import |
-| `settings.json` | 설정 | 권한(`uv`·`gh` 허용, 위험 명령 차단). 개인용 |
+| [sdd-feat](#sdd) | Skill | SDD(PRD → SPEC → PLAN → TASK → IMPLEMENT)로 기능 추가·수정. 언어 무관 |
+| [sdd-init-fastapi](#sdd) | Skill | 새 FastAPI 프로젝트 뼈대 생성 (`/sdd-feat` 전에 1회) |
+| [stacks/](#sdd) | Stack | 스택별 코드 규칙(`fastapi.md`, `spring-boot.md`). 소비 프로젝트 `CLAUDE.md`가 import |
+| `settings.json` | 설정 | 권한(`uv`·`./gradlew`·`gh` 허용, 위험 명령 차단). 개인용 |
 
 ## 설치
 
@@ -44,29 +44,32 @@ git commit -am "<설명>" && git push -u origin HEAD && gh pr create
 
 머지되면 각 프로젝트에서 `git submodule update --remote .claude`로 반영.
 
-## SDD — feat 방식
-기능 하나를 `docs/<feature-name>/`의 prd·spec·plan·task·implement 문서로 진행하는 자체 SDD 방식이다. 방법론은 언어와 무관하고(`skills/feat/`), 언어별 규칙은 스택 파일(`stacks/<stack>.md`)과 init 스킬(`skills/<stack>-init/`)로 더한다.
+## SDD
+SDD 관련 스킬은 모두 `sdd-` 접두사를 쓴다. 지금은 자체 방식(`sdd-feat`, `sdd-init-<stack>`) 하나다.
+
+기능 하나를 `docs/<feature-name>/`의 prd·spec·plan·task·implement 문서로 진행하는 자체 SDD 방식이다. 방법론은 언어와 무관하고(`skills/sdd-feat/`), 언어별 규칙은 스택 파일(`stacks/<stack>.md`)과 init 스킬(`skills/sdd-init-<stack>/`)로 더한다.
 
 새 FastAPI 프로젝트:
 ```sh
 git init && git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .claude
 ```
 ```
-/fastapi-init                          # 1. 뼈대·CLAUDE.md·README 생성 (먼저 한 번)
-/feat 유저가 주문을 생성한다. 하루 10건 제한   # 2. 기능마다
-/feat api-order-create                  #    멈춘 단계부터 이어서
-/feat api-order-create 쿠폰 필드 추가    #    기존 기능 수정
+/sdd-init-fastapi                          # 1. 뼈대·CLAUDE.md·README 생성 (먼저 한 번)
+/sdd-feat 유저가 주문을 생성한다. 하루 10건 제한   # 2. 기능마다
+/sdd-feat api-order-create                  #    멈춘 단계부터 이어서
+/sdd-feat api-order-create 쿠폰 필드 추가    #    기존 기능 수정
 ```
 
 | 파일 | 구분 | 내용 |
 |---|---|---|
-| `skills/feat/sdd-template.md` | 공통 | 방법론: 단계별 기준, Grill(질문 규칙), 문서 관리·커밋 규칙 |
-| `skills/feat/templates/` | 공통 | 단계별 문서 템플릿 (spec은 `api-`·`component-`·`domain-` 접두사별) |
-| `skills/feat/github.md` | 공통 | GitHub Project 이슈·상태·PR 연동 (`CLAUDE.md`에 owner·번호가 있을 때만) |
+| `skills/sdd-feat/process.md` | 공통 | 방법론: 단계별 기준, Grill(질문 규칙), 문서 관리·커밋 규칙 |
+| `skills/sdd-feat/templates/` | 공통 | 단계별 문서 템플릿 (spec은 `api-`·`component-`·`domain-` 접두사별) |
+| `skills/sdd-feat/tracker-github.md` | 공통 | GitHub Project 이슈·상태·PR 연동 (`CLAUDE.md`에 owner·번호가 있을 때만) |
 | `stacks/fastapi.md` | 스택 | 레이어·DI·에러·테스트 규칙과 "스택 연결 값" |
-| `skills/fastapi-init/` | 스택 | 부트스트랩 절차와 기본 코드(`files/`) |
+| `skills/sdd-init-fastapi/` | 스택 | 부트스트랩 절차와 기본 코드(`files/`) |
+| `stacks/spring-boot.md` | 스택 | Spring Boot·Java 규칙 초안 (init 스킬 없음: start.spring.io로 생성) |
 
-- 다른 언어: `stacks/<stack>.md`(sdd-template의 "스택 연결 값" 표를 채움)와 `skills/<stack>-init/`만 추가한다.
+- 다른 언어: `stacks/<stack>.md`(`process.md`의 "스택 연결 값" 표를 채움)와 `skills/sdd-init-<stack>/`만 추가한다.
 - 프로젝트에만 해당하는 모듈·요구사항은 소비 프로젝트 루트 `CLAUDE.md`에 둔다.
 
 ## Skills

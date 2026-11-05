@@ -1,4 +1,4 @@
-# SDD 템플릿
+# SDD 프로세스
 
 **[1. PRD] ➔ [2. SPEC] ➔ [3. PLAN] ➔ [4. TASK] ➔ [5. IMPLEMENT]**
 
@@ -9,15 +9,15 @@
 
 | 파일 | 구분 | 담는 내용 |
 |---|---|---|
-| `.claude/skills/feat/sdd-template.md` | 공통 | SDD 방법론: 단계별 기준, Grill, 문서 관리·커밋 규칙 (이 파일) |
-| `.claude/skills/feat/` | 공통 | `/feat` 실행 절차(`SKILL.md`), 단계별 문서 템플릿(`templates/`), 이슈 트래커 명령(`github.md`) |
+| `.claude/skills/sdd-feat/process.md` | 공통 | SDD 방법론: 단계별 기준, Grill, 문서 관리·커밋 규칙 (이 파일) |
+| `.claude/skills/sdd-feat/` | 공통 | `/sdd-feat` 실행 절차(`SKILL.md`), 단계별 문서 템플릿(`templates/`), 이슈 트래커 명령(`tracker-github.md`) |
 | `.claude/stacks/<stack>.md` | 스택 | 그 스택의 코드 규칙과 아래 "스택 연결 값". 같은 스택의 어느 프로젝트에도 맞는 내용만 |
-| `.claude/skills/<stack>-init/` | 스택 | 새 프로젝트 생성 스킬과 기본 코드 |
+| `.claude/skills/sdd-init-<stack>/` | 스택 | 새 프로젝트 생성 스킬과 기본 코드 |
 | `CLAUDE.md` | 프로젝트 | 이 프로젝트에만 맞는 것: 개요, 고유 모듈, 서비스 요구사항. 스택 파일을 `@import` |
 | `README.md` | 프로젝트 | 사람용: 소개, 실행 방법, 환경 변수, API 목록 |
 | `docs/<feature-name>/` | 기능 | 기능 하나의 PRD~구현 기록 |
 
-- 새 스택에 적용할 때는 공통 파일은 그대로 두고 `stacks/<stack>.md`와 `skills/<stack>-init/`만 새로 만듭니다.
+- 새 스택에 적용할 때는 공통 파일은 그대로 두고 `stacks/<stack>.md`와 `skills/sdd-init-<stack>/`만 새로 만듭니다.
 - 같은 내용을 두 군데에 쓰지 않습니다. 어디에 둘지 헷갈리면: 언어와 무관하면 이 파일, 같은 스택의 다른 프로젝트에도 맞으면 스택 파일, 이 프로젝트에서만 맞으면 `CLAUDE.md`.
 
 ### 스택 연결 값
@@ -36,7 +36,7 @@
 ## 한눈에 보기
 기능 하나당 `docs/<feature-name>/` 폴더 하나에 아래 문서를 차례로 만듭니다. `<feature-name>`은 kebab-case에 접두사를 붙입니다: HTTP API `api-`, 백그라운드 컴포넌트 `component-`, 도메인 모델만 정의 `domain-`.
 
-| 단계 | 답하는 질문 | 산출물 (템플릿: `.claude/skills/feat/templates/`) | 넘어가는 기준 |
+| 단계 | 답하는 질문 | 산출물 (템플릿: `.claude/skills/sdd-feat/templates/`) | 넘어가는 기준 |
 |---|---|---|---|
 | 0. 방향성 | 이 서비스는 무엇을 하나? | `CLAUDE.md` 요구사항 섹션 | 기능이 기존 요구사항과 충돌하지 않음 |
 | 1. PRD | 왜, 무엇을 만드나? | `prd.md` | 하는 일과 규칙이 한두 문단으로 설명됨 |
@@ -45,7 +45,7 @@
 | 4. TASK | 어떤 순서로 하나? | `task.md` | 작업 크기·순서·병렬 묶음을 사용자가 확인함 |
 | 5. IMPLEMENT | 제대로 동작하나? | 코드 + `implement.md` | 완료 체크리스트 통과 |
 
-진행은 `/feat` 스킬로 합니다(사용법: `.claude/skills/feat/SKILL.md`). 한 단계의 문서를 만들면 보여주고 확인받은 뒤 다음 단계로 갑니다. **spec 없이 구현하지 않습니다.**
+진행은 `/sdd-feat` 스킬로 합니다(사용법: `.claude/skills/sdd-feat/SKILL.md`). 한 단계의 문서를 만들면 보여주고 확인받은 뒤 다음 단계로 갑니다. **spec 없이 구현하지 않습니다.**
 
 ### 문서 관리 규칙
 | 문서 | 수정 방식 | 이유 |
@@ -114,7 +114,7 @@
 - 테스트 작업과 문서 갱신 작업이 빠지지 않았는가?
 
 ### 이슈 트래커 연동
-`CLAUDE.md`에 이슈 트래커가 설정돼 있을 때만 합니다(없으면 건너뛰고 알림). 트래커별 명령은 `.claude/skills/feat/`에 둡니다(GitHub: `github.md`).
+`CLAUDE.md`에 이슈 트래커가 설정돼 있을 때만 합니다(없으면 건너뛰고 알림). 트래커별 명령은 `.claude/skills/sdd-feat/`에 둡니다(GitHub: `tracker-github.md`).
 
 | 시점 | 할 일 |
 |---|---|

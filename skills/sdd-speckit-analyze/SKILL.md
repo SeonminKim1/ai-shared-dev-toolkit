@@ -1,6 +1,7 @@
 ---
 name: sdd-speckit-analyze
 description: spec-kit 기반 SDD의 점검 단계. tasks 작성 후 implement 전에 spec.md·plan.md·tasks.md와 constitution 사이의 모순·중복·누락을 읽기 전용으로 분석해 보고한다(`/sdd-speckit-analyze [NNN] [집중할 부분]`). 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-speckit-analyze

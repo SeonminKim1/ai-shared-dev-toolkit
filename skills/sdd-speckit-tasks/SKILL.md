@@ -1,6 +1,7 @@
 ---
 name: sdd-speckit-tasks
 description: spec-kit 기반 SDD의 작업 분할 단계. `specs/NNN-<이름>/`의 plan·spec·설계 문서로 유저 스토리별 phase와 의존 순서가 있는 tasks.md를 만든다(`/sdd-speckit-tasks [NNN] [제약]`). 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-speckit-tasks

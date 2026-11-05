@@ -1,6 +1,7 @@
 ---
 name: sdd-speckit-specify
 description: spec-kit 기반 SDD의 첫 단계. 짧은 기능 설명으로 `specs/NNN-<이름>/spec.md`를 만들거나(`/sdd-speckit-specify <기능 설명>`), 기존 기능의 spec을 고친다(`/sdd-speckit-specify <NNN> <변경 내용>`). 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-speckit-specify

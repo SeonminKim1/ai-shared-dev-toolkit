@@ -4,9 +4,16 @@ description: 소재(.md/PDF)로 "잉여개발자" 티스토리 블로그 문체�
 argument-hint: <slug>
 hooks:
   PostToolUse:
-    - matcher: "Write|Edit"
+    # 스킬 훅은 세션 끝까지 남으므로 if로 post.html만 걸러 다른 스킬의 Write/Edit에서는 실행되지 않게 한다
+    - matcher: "Write"
       hooks:
         - type: command
+          if: "Write(**/posts/*/post.html)"
+          command: "$CLAUDE_PROJECT_DIR/.claude/skills/tistory-post/hooks/on-post-edit.sh"
+    - matcher: "Edit"
+      hooks:
+        - type: command
+          if: "Edit(**/posts/*/post.html)"
           command: "$CLAUDE_PROJECT_DIR/.claude/skills/tistory-post/hooks/on-post-edit.sh"
 ---
 

@@ -1,5 +1,5 @@
 #!/bin/zsh
-# PostToolUse(Write|Edit) 훅 — SKILL.md frontmatter에서 등록, 스킬이 켜진 동안만 실행됨
+# PostToolUse(Write|Edit) 훅 — SKILL.md frontmatter에서 등록, if 필터로 post.html 수정 때만 실행됨
 # posts/<slug>/post.html 이 바뀌면: 서식 규칙 검사 → 위반 시 exit 2 (stderr가 Claude에게 전달되어 고치게 함)
 #                                   통과 시 preview.html 재생성 (처음 생성이면 브라우저로 열기)
 FILE=$(jq -r '.tool_input.file_path // empty')

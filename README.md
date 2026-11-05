@@ -10,6 +10,7 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 |---|---|
 | [`/sdd-init-fastapi`](#-sdd) | 새 FastAPI 프로젝트 뼈대 생성 (`/sdd-feat` 전에 1회) |
 | [`/sdd-feat <기능 설명>`](#-sdd) | SDD(PRD → SPEC → PLAN → TASK → IMPLEMENT)로 기능 추가·수정 |
+| [`/sdd-speckit-specify <기능 설명>`](#-sdd-spec-kit-기반) | spec-kit 기반 SDD(specify → clarify → plan → tasks → analyze → implement → converge)로 기능 추가·수정 |
 | [`/learning-examples <라이브러리>`](#-learning-examples) | 라이브러리 학습용 예제를 계획하고 단계별로 작성 |
 | [`/tistory-post <slug>`](#-tistory-post) | 소재로 티스토리 붙여넣기용 글 생성 (개인용, macOS) |
 
@@ -31,6 +32,20 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 ```
 
 단계별 설명 · 파일 구성 · 다른 언어 추가는 [skills/sdd-feat/README.md](skills/sdd-feat/README.md) 참고
+
+<br>
+
+## 📚 SDD (spec-kit 기반)
+
+[GitHub spec-kit](https://github.com/github/spec-kit)의 단계·산출물을 따르고 본문은 이 툴킷 규칙으로 다시 쓴 SDD. `specify` CLI 없이 동작하며 문서는 `specs/NNN-<이름>/`에 쌓인다. 한 프로젝트에서는 `sdd-feat`와 둘 중 하나만 쓴다.
+
+```sh
+/sdd-speckit-specify 유저가 주문을 생성한다.   # specs/004-api-order-create/ + 브랜치
+/sdd-speckit-clarify → /sdd-speckit-plan → /sdd-speckit-tasks → /sdd-speckit-analyze
+/sdd-speckit-implement ↔ /sdd-speckit-converge   # 수렴할 때까지
+```
+
+upstream과 다른 점 · 파일 구성 · sdd-feat 문서 옮기기는 [skills/sdd-speckit/README.md](skills/sdd-speckit/README.md) 참고
 
 <br>
 

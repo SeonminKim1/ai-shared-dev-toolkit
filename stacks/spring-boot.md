@@ -1,10 +1,10 @@
 # Spring Boot 스택 규칙
 
-`.claude/skills/sdd-feat/process.md`(언어와 무관한 SDD 방법론)에 Spring Boot + Java 규칙을 더한 스택 파일이다. 소비 프로젝트의 `CLAUDE.md`가 `@.claude/stacks/spring-boot.md`로 import한다. **같은 스택의 어느 프로젝트에도 맞는 내용만** 둔다.
+언어와 무관한 SDD 방법론(`.claude/skills/sdd-feat/process.md` 또는 `.claude/skills/sdd-speckit/process.md`)에 Spring Boot + Java 규칙을 더한 스택 파일이다. 소비 프로젝트의 `CLAUDE.md`가 `@.claude/stacks/spring-boot.md`로 import한다. **같은 스택의 어느 프로젝트에도 맞는 내용만** 둔다.
 
 > 가벼운 초안이다. Gradle(Kotlin DSL)·Spotless·springdoc-openapi 기준이며, 프로젝트가 다르면 "스택 연결 값"의 명령부터 맞춘다. 아직 `sdd-init-spring-boot` 스킬이 없으므로 새 프로젝트는 start.spring.io로 만들고, `CLAUDE.md`는 `sdd-init-fastapi`의 7번 틀에서 import 경로만 바꿔 쓴다.
 
-- **SDD**: 기능 추가·수정은 `/sdd-feat`(`.claude/skills/sdd-feat/process.md`의 단계)로 진행한다. spec 없이 구현하지 않고, spec·plan에 없는 상황은 추측하지 말고 묻는다.
+- **SDD**: 기능 추가·수정은 `/sdd-feat`(`.claude/skills/sdd-feat/process.md`) 또는 `/sdd-speckit-specify`부터(`.claude/skills/sdd-speckit/process.md`) 진행한다. 기능 문서가 `docs/<feature-name>/`에 있으면 sdd-feat, `specs/NNN-<이름>/`에 있으면 sdd-speckit 방식이다. spec 없이 구현하지 않고, spec·plan에 없는 상황은 추측하지 말고 묻는다.
 
 ## 스택 연결 값
 | 항목 | 값 |

@@ -8,9 +8,9 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 
 | 명령 | 하는 일 |
 |---|---|
-| [`/sdd-init-fastapi`](#-sdd) | 새 FastAPI 프로젝트 뼈대 생성, SDD 방식(`sdd-feat`·`sdd-speckit`) 선택 (첫 기능 전에 1회) |
-| [`/sdd-feat <기능 설명>`](#-sdd) | SDD(PRD → SPEC → PLAN → TASK → IMPLEMENT)로 기능 추가·수정 |
-| [`/sdd-speckit-specify <기능 설명>`](#-sdd-spec-kit-기반) | spec-kit 기반 SDD(specify → clarify → plan → tasks → analyze → implement → converge)로 기능 추가·수정 |
+| [`/sdd-init-fastapi`](#-sdd) | 새 FastAPI 프로젝트 뼈대 생성 + SDD 방식 선택 (첫 기능 전에 1회) |
+| [`/sdd-speckit-specify <기능 설명>`](#-sdd) | spec-kit 기반 SDD로 기능 추가·수정 (이후 단계마다 `/sdd-speckit-<단계>`) |
+| [`/sdd-feat <기능 설명>`](#-sdd) | 자체 5단계 SDD로 기능 추가·수정 (명령 하나로 진행) |
 | [`/learning-examples <라이브러리>`](#-learning-examples) | 라이브러리 학습용 예제를 계획하고 단계별로 작성 |
 | [`/tistory-post <slug>`](#-tistory-post) | 소재로 티스토리 붙여넣기용 글 생성 (개인용, macOS) |
 
@@ -18,35 +18,35 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 
 ## 📚 SDD
 
-문서(spec)를 먼저 정하고 코드를 작성하는 SDD(Spec-Driven Development) 방식으로, 기능을 PRD → SPEC → PLAN → TASK → IMPLEMENT 순서로 진행한다.
+문서(spec)를 먼저 정하고 코드를 작성하는 SDD(Spec-Driven Development) 스킬. 방식이 두 가지이고, 한 프로젝트에서는 하나만 쓴다.
+
+| | `sdd-speckit` | `sdd-feat` |
+|---|---|---|
+| 기반 | [GitHub spec-kit](https://github.com/github/spec-kit) 단계·산출물 (`specify` CLI 없이 동작) | 이 툴킷의 자체 방식 |
+| 단계 | specify → clarify → plan → tasks → analyze → implement ↔ converge | PRD → SPEC → PLAN → TASK → IMPLEMENT |
+| 명령 | 단계마다 `/sdd-speckit-<단계>` | `/sdd-feat` 하나로 진행 |
+| 문서 위치 | `specs/NNN-<이름>/` | `docs/<feature>/` |
+| 맞는 경우 | 산출물·점검(analyze, converge)을 꼼꼼히 남길 때. `/sdd-init-fastapi` 추천값 | 문서를 가볍게 유지할 때 |
 
 ```sh
-# 1. 뼈대·CLAUDE.md·README 생성 (최초 실행)
+# 0. 새 프로젝트면 먼저 1회: 뼈대·CLAUDE.md·README 생성, SDD 방식 선택
 /sdd-init-fastapi
 
-# 2. 기능마다
-/sdd-feat 유저가 주문을 생성한다. (api-order-create/가 생성됨)
-
-# 3. 기존 기능 업데이트
-/sdd-feat api-order-create 쿠폰 필드 추가
-```
-
-단계별 설명 · 파일 구성 · 다른 언어 추가는 [skills/sdd-feat/README.md](skills/sdd-feat/README.md) 참고
-
-<br>
-
-## 📚 SDD (spec-kit 기반)
-
-[GitHub spec-kit](https://github.com/github/spec-kit)의 단계·산출물을 따르고 본문은 이 툴킷 규칙으로 다시 쓴 SDD. `specify` CLI 없이 동작하며 문서는 `specs/NNN-<이름>/`에 쌓인다. 한 프로젝트에서는 `sdd-feat`와 둘 중 하나만 쓴다.
-
-```sh
-/sdd-init-fastapi                              # 새 프로젝트면 먼저 (SDD 방식에서 sdd-speckit 선택)
+# sdd-speckit
 /sdd-speckit-specify 유저가 주문을 생성한다.   # specs/004-api-order-create/ + 브랜치
 /sdd-speckit-clarify → /sdd-speckit-plan → /sdd-speckit-tasks → /sdd-speckit-analyze
-/sdd-speckit-implement ↔ /sdd-speckit-converge   # 수렴할 때까지
+/sdd-speckit-implement ↔ /sdd-speckit-converge  # 수렴할 때까지
+/sdd-speckit-specify 004 쿠폰 필드 추가          # 기존 기능 수정
+
+# sdd-feat
+/sdd-feat 유저가 주문을 생성한다.               # docs/api-order-create/
+/sdd-feat api-order-create 쿠폰 필드 추가        # 기존 기능 수정
 ```
 
-upstream과 다른 점 · 파일 구성 · sdd-feat 문서 옮기기는 [skills/sdd-speckit/README.md](skills/sdd-speckit/README.md) 참고
+지원 스택은 **FastAPI**(init 스킬 포함)와 **Spring Boot**(규칙 초안)이며, 스택 규칙(`stacks/`)은 두 방식이 같이 쓴다.
+
+- sdd-speckit: 단계별 산출물 · upstream과 다른 점 · sdd-feat 문서 옮기기 → [skills/sdd-speckit/README.md](skills/sdd-speckit/README.md)
+- sdd-feat: 단계별 설명 · 파일 구성 · 다른 언어 추가 → [skills/sdd-feat/README.md](skills/sdd-feat/README.md)
 
 <br>
 
@@ -96,7 +96,7 @@ git commit -am "<설명>" && git push -u origin HEAD && gh pr create
 ```
 
 ```
-skills/<이름>/   스킬 (SKILL.md + 전용 hooks/, scripts/)
+skills/<이름>/   스킬 (SKILL.md + 전용 hooks/, scripts/). 여러 스킬이 같이 쓰는 파일은 SKILL.md 없는 폴더에 (예: skills/sdd-speckit/)
 stacks/          스택별 코드 규칙 (각 프로젝트 CLAUDE.md가 import)
 hooks/           공용 훅 (~/.claude/settings.json에 등록)
 settings.json    권한만 (uv·gradlew·gh 허용, 위험 명령 차단). 개인용

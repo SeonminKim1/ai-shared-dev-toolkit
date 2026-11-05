@@ -14,7 +14,7 @@ description: spec-kit 기반 SDD의 구현 단계. `specs/NNN-<이름>/tasks.md`
 4. `templates/implement.md`로 `implement.md`를 만든다(있으면 이어서).
 
 ## 2. 작업마다
-실행 흐름 순서대로 미완료(`- [ ]`) 작업을 **하나씩** 한다. 병렬 단계도 하나씩 한다.
+실행 흐름 순서대로 미완료(`- [ ]`) 작업을 **하나씩** 한다. 병렬 단계도 하나씩 한다. 실행 흐름이 끝나면 수렴(Convergence) phase를 위에서부터 그 phase의 실행 순서대로 한다.
 1. ▶ 보고하고(process.md 형식), 이슈가 있으면 `In Progress`(tasks.md에 이슈를 만들지 않는다고 적혀 있으면 트래커 명령은 모두 건너뛴다).
 2. 구현한다. 스택 규칙과 contracts·data-model을 그대로 따르고, 테스트를 함께 쓴다. spec·plan이 다루지 않는 상황이면 ⏸ 보고 후 멈추고 묻는다(되돌아가기). 답을 받으면:
    1. 해당 문서(spec·plan·data-model 등, 다른 기능의 문서 포함)를 먼저 고친다.

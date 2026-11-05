@@ -75,7 +75,7 @@ SDD 방법론(`process.md`)의 단계에서 스택마다 달라지는 값이다.
 - **요청 body**: `Body(openapi_examples={...})`로 대표 입력을 이름 붙여 둔다(예: 필수 필드만, 모든 필드).
 - **헤더·쿼리 파라미터**: `Header(...)`·`Query(...)`에도 `openapi_examples`를 둔다.
 - **정상 응답**: `responses={<상태 코드>: {"content": {"application/json": {"example": ...}}}}`.
-- **에러 응답**: 엔드포인트마다 나열하지 않는다. `schemas/error_response.py`에 400·500(필요하면 404) 응답 문서(`ErrorResponse` 모양 + 대표 example 하나)를 두고 `APIRouter(responses=...)`로 라우터마다 한 번만 붙인다.
+- **에러 응답**: 엔드포인트마다 code를 나열하지 않는다. `schemas/error_response.py`에 상태 코드별 응답 문서(`ErrorResponse` 모양 + 대표 example 하나)를 두고, 그 라우터의 모든 엔드포인트가 돌려주는 것(400·500)은 `APIRouter(responses=...)`로 한 번만, 일부 엔드포인트만 돌려주는 것(예: 404)은 그 엔드포인트의 `responses`에 붙인다. `/docs`에는 실제로 돌려주는 상태 코드만 보인다.
   - 엔드포인트별 에러 code 목록의 기준은 기능 문서의 에러 표다(sdd-feat: `docs/<feature-name>/spec.md`, sdd-speckit: `specs/NNN-<이름>/contracts/`). `/docs`에는 엔드포인트 `description`에 그 경로만 적는다(같은 목록을 코드·테스트에 다시 쓰지 않는다).
   - 전역 핸들러의 500 본문은 핸들러와 문서가 같은 상수를 쓴다.
 - example 값은 해당 schema 모듈(요청 example은 `schemas/<name>_request.py`, 응답 example은 `schemas/<name>_response.py`)에 상수로 두고 라우터가 연결만 한다.

@@ -16,11 +16,12 @@
 - **성능·제약**: <해당 없으면 "없음">
 
 ## Constitution Check
-<!-- GATE: research 전에 통과해야 하고, 설계(data-model·contracts) 후 다시 확인한다. constitution.md 원칙과 CLAUDE.md 요구사항 중 이 기능에 걸리는 것만 -->
+<!-- GATE: research 전에 통과해야 하고, 설계(data-model·contracts) 후 다시 확인한다. constitution.md 원칙, 스택 파일 규칙(레이어·에러·API 문서·테스트 등), CLAUDE.md 요구사항 중 이 기능에 걸리는 것만 -->
 | 원칙·요구사항 | 이 기능에서 지키는 방법 | 결과 |
 |---|---|---|
 | II. 레이어 | | 통과 |
 | IV. 에러 표현 | | 통과 |
+| 스택: <규칙 이름> | | 통과 |
 | `CLAUDE.md`: <요구사항> | | 통과 |
 
 ## 프로젝트 구조 (Project Structure)

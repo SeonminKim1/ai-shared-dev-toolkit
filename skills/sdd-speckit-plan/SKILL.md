@@ -9,7 +9,7 @@ description: spec-kit 기반 SDD의 계획 단계. `specs/NNN-<이름>/spec.md`�
 
 ## 1. 기술 맥락과 Constitution Check
 1. `templates/plan.md`로 `plan.md`를 만들고 기술 맥락을 채운다. 프로젝트 코드·스택 파일로 답이 나오면 그대로, 모르는 것만 `NEEDS CLARIFICATION`.
-2. Constitution Check를 채운다(process.md "Constitution"). 통과하지 못하면 예외의 근거를 복잡도 기록에 적거나, 근거가 없으면 멈추고 묻는다.
+2. Constitution Check를 채운다(process.md "Constitution"). constitution 원칙만이 아니라 스택 파일의 규칙 중 이 기능이 건드리는 것(예: API 문서, 에러 응답 문서, 요청 파싱)도 행으로 넣는다. 통과하지 못하면 예외의 근거를 복잡도 기록에 적거나, 근거가 없으면 멈추고 묻는다.
 
 ## 2. Phase 0: research.md
 - `NEEDS CLARIFICATION`마다, 새 의존성·연동마다 결정 하나를 `templates/research.md` 형식(결정 / 근거 / 검토한 대안)으로 적는다. 기존 코드 패턴(`specs/*/`, `src/`)을 먼저 찾아 맞춘다.

@@ -15,6 +15,7 @@
 - 스킬 전용 훅은 루트 `settings.json` 대신 스킬 frontmatter(`hooks:`)에 등록하고, 스크립트는 `skills/<이름>/hooks/`에 둔다
   (루트 settings.json은 소비 프로젝트 설정과 충돌하고 모든 작업에 적용됨). 직접 실행하는 도구는 `scripts/`.
 - 스킬의 상세 설명(사용법 세부, 파일 구성, 훅 연결 고리)은 `skills/<이름>/README.md`에 둔다 (사람용, 스킬 본문에 넣지 않음).
+  여러 스킬로 나뉜 묶음(예: `sdd-speckit-*`)은 공용 폴더(`skills/sdd-speckit/README.md`)에 하나만 둔다.
   루트 `README.md`에는 한두 문장 소개 + 명령 + 링크만 둔다.
 
 ## 규칙

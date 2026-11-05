@@ -4,15 +4,17 @@
 
 ## 개요
 
-[GitHub spec-kit](https://github.com/github/spec-kit)의 단계·산출물·품질 장치를 따르는 SDD 스킬 묶음. `specify` CLI·`.specify/` 스크립트·extension 훅 없이 툴킷 안에서 동작하고, 본문은 한국어로 다시 썼다. 기능별 문서는 `specs/NNN-<이름>/`에 쌓인다.
+[GitHub spec-kit](https://github.com/github/spec-kit)(v1.3.0 기준)의 단계·산출물·품질 장치를 따르는 SDD 스킬 묶음. `specify` CLI·`.specify/` 스크립트·extension 훅 없이 툴킷 안에서 동작하고, 본문은 한국어로 다시 썼다. 기능별 문서는 `specs/NNN-<접두사>-<이름>/`에, 브랜치도 같은 이름으로 생긴다(접두사: `api-`, `component-`, `domain-`).
+
+이 폴더에는 `SKILL.md`가 없다. 단계별 스킬(`skills/sdd-speckit-<단계>/`)이 함께 쓰는 규칙·템플릿만 둔다.
 
 | 단계 | 명령 | 산출물 |
 |---|---|---|
 | 1. specify | `/sdd-speckit-specify <기능 설명>` | `spec.md`, `checklists/requirements.md`, 브랜치 `NNN-<이름>` |
-| 2. clarify | `/sdd-speckit-clarify` | `spec.md`의 `## 명확화` (질문 최대 5개) |
+| 2. clarify | `/sdd-speckit-clarify` | `spec.md`의 `## 명확화` (질문 최대 5개, 모호한 점이 없으면 건너뜀) |
 | 3. plan | `/sdd-speckit-plan` | `plan.md`, `research.md`, `data-model.md`, `contracts/`, `quickstart.md` |
 | 4. tasks | `/sdd-speckit-tasks` | `tasks.md` |
-| 5. analyze | `/sdd-speckit-analyze` | 보고서 (읽기 전용) |
+| 5. analyze | `/sdd-speckit-analyze` | 보고서 (읽기 전용, implement 전에 권장) |
 | 6. implement | `/sdd-speckit-implement` | 코드, `implement.md`, 작업별 커밋 |
 | 7. converge | `/sdd-speckit-converge` | `tasks.md`에 남은 작업 추가 (수렴할 때까지 6↔7) |
 
@@ -25,9 +27,14 @@
 /sdd-speckit-implement
 /sdd-speckit-converge
 /sdd-speckit-specify 004 쿠폰 필드 추가                               # 기존 기능 수정
+/sdd-speckit-implement 004 주문 목록 정렬 버그 수정                   # 버그·문구 수정은 바로 implement
 ```
 
-새 FastAPI 프로젝트는 `/sdd-init-fastapi`에서 SDD 방식으로 `sdd-speckit`을 고르면 CLAUDE.md·README가 이 방식 기준으로 만들어진다. 단계 명령은 대상 기능을 인자(`004`)나 현재 브랜치(`004-...`)로 찾는다. specify 인자 끝에 "끝까지"를 붙이면 단계 사이 확인만 생략하고 이어서 진행한다.
+**새 프로젝트** : `/sdd-init-fastapi`에서 SDD 방식으로 `sdd-speckit`을 고르면 CLAUDE.md·README가 이 방식 기준으로 만들어진다.<br>
+**대상 기능** : specify 외 단계는 인자(`004`) → 현재 브랜치(`004-...`) 순으로 찾고, 둘 다 없으면 `specs/` 목록을 보여주고 묻는다.<br>
+**끝까지** : 인자 끝에 "끝까지"를 붙이면 단계 사이 확인만 생략하고 다음 단계를 이어 호출한다. 질문과 implement의 작업별 확인은 그대로 한다.<br>
+**작은 변경** : 버그·문구 수정은 바로 implement(`tasks.md`에 변경 phase 추가). 기존 기능의 동작 변경은 specify로 spec을 고친 뒤 plan부터. 새 API·컴포넌트는 specify부터.<br>
+**이슈 트래커** : `CLAUDE.md`에 GitHub Project가 설정돼 있을 때만 작업별 이슈·PR을 연동한다(`sdd-feat/tracker-github.md` 재사용). 기능 하나만 빼려면 tasks 단계에서 그렇게 답하면 된다.
 
 <br>
 
@@ -57,7 +64,7 @@ contracts는 기능 접두사로 고른다: `api-` → `contract-api.md`(엔드�
 | `skills/sdd-speckit/templates/` | spec, checklist, plan, research, data-model, contract-api·component, quickstart, tasks, implement |
 | `skills/sdd-speckit-<단계>/SKILL.md` | 단계별 절차와 Grill 체크리스트 |
 | `skills/sdd-speckit/LICENSE-spec-kit` | upstream MIT 라이선스와 기준 버전 |
-| `stacks/<stack>.md` | `sdd-feat`와 함께 쓰는 스택 규칙 |
+| `stacks/<stack>.md` | 스택 규칙 (`sdd-feat`와 같이 씀). 다른 언어 추가는 [../sdd-feat/README.md](../sdd-feat/README.md#다른-언어-추가) 참고 |
 
 <br>
 

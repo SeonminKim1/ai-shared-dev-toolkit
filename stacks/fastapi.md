@@ -1,12 +1,12 @@
 # FastAPI 스택 규칙
 
-`.claude/skills/feat/sdd-template.md`(언어와 무관한 SDD 방법론)에 FastAPI + Python 규칙을 더한 스택 파일이다. 소비 프로젝트의 `CLAUDE.md`가 `@.claude/stacks/fastapi.md`로 import한다. **같은 스택의 어느 프로젝트에도 맞는 내용만** 둔다. 이 프로젝트에만 해당하는 모듈·요구사항은 `CLAUDE.md`에 둔다.
+`.claude/skills/sdd-feat/process.md`(언어와 무관한 SDD 방법론)에 FastAPI + Python 규칙을 더한 스택 파일이다. 소비 프로젝트의 `CLAUDE.md`가 `@.claude/stacks/fastapi.md`로 import한다. **같은 스택의 어느 프로젝트에도 맞는 내용만** 둔다. 이 프로젝트에만 해당하는 모듈·요구사항은 `CLAUDE.md`에 둔다.
 
-- **SDD**: 기능 추가·수정은 `/feat`(`.claude/skills/feat/sdd-template.md`의 단계)로 진행한다. spec 없이 구현하지 않고, spec·plan에 없는 상황은 추측하지 말고 묻는다.
-- **새 프로젝트**: `src/`가 없으면 `/fastapi-init`으로 먼저 뼈대를 만든다.
+- **SDD**: 기능 추가·수정은 `/sdd-feat`(`.claude/skills/sdd-feat/process.md`의 단계)로 진행한다. spec 없이 구현하지 않고, spec·plan에 없는 상황은 추측하지 말고 묻는다.
+- **새 프로젝트**: `src/`가 없으면 `/sdd-init-fastapi`으로 먼저 뼈대를 만든다.
 
 ## 스택 연결 값
-`sdd-template.md`의 단계에서 스택마다 달라지는 값이다.
+`.claude/skills/sdd-feat/process.md`의 단계에서 스택마다 달라지는 값이다.
 
 | 항목 | 값 |
 |---|---|
@@ -87,4 +87,4 @@
   - `MyApiError` → `{code, message}` JSON + enum에 지정된 상태 코드
   - DB 에러 → 500
   - 기타 `Exception` → 500 (`unknown_error`)
-- 500은 전역 예외 핸들러만 응답한다. 기본 코드는 `.claude/skills/fastapi-init/files/`.
+- 500은 전역 예외 핸들러만 응답한다. 기본 코드는 `.claude/skills/sdd-init-fastapi/files/`.

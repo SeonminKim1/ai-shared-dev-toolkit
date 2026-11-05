@@ -1,13 +1,13 @@
 # 이슈 트래커 연동: GitHub Project (`gh` CLI)
 
-`sdd-template.md`의 "이슈 트래커 연동"을 GitHub Project로 할 때의 명령이다. `CLAUDE.md`의 "GitHub Project" 항목(owner, Project 번호)이 채워져 있을 때만 쓴다. 다른 트래커를 쓰게 되면 같은 시점(이슈 생성·상태 변경·PR)을 담은 파일을 이 폴더에 따로 둔다.
+`process.md`의 "이슈 트래커 연동"을 GitHub Project로 할 때의 명령이다. `CLAUDE.md`의 "GitHub Project" 항목(owner, Project 번호)이 채워져 있을 때만 쓴다. 다른 트래커를 쓰게 되면 같은 시점(이슈 생성·상태 변경·PR)을 담은 파일을 이 폴더에 따로 둔다.
 
 ## 준비 (최초 1회, 사용자가 실행)
 - `gh` 설치 후 `gh auth login`, `gh auth refresh -s project` (Projects는 `project` 스코프가 필요)
 - 저장소에 GitHub remote가 연결돼 있어야 한다.
 - Project에 `Status` 필드(`Todo` / `In Progress` / `Done`)가 있어야 한다(GitHub 기본 템플릿).
 
-## ID 조회 (`/feat` 실행 중 처음 필요할 때 한 번, `<owner>`·`<number>`는 `CLAUDE.md` 값)
+## ID 조회 (`/sdd-feat` 실행 중 처음 필요할 때 한 번, `<owner>`·`<number>`는 `CLAUDE.md` 값)
 ```bash
 gh project view <number> --owner <owner> --format json --jq '{id, title}'   # Project ID(PVT_...), 제목
 gh project field-list <number> --owner <owner> --format json \

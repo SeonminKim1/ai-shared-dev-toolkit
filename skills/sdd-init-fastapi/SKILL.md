@@ -1,13 +1,13 @@
 ---
-name: fastapi-init
-description: 빈 프로젝트에 FastAPI + Python(uv) 백엔드 뼈대와 SDD용 CLAUDE.md·README를 만든다. 새 FastAPI 프로젝트를 시작하거나 "템플릿대로 세팅해줘"라고 할 때, `/feat`로 첫 기능을 시작하기 전에 사용.
+name: sdd-init-fastapi
+description: 빈 프로젝트에 FastAPI + Python(uv) 백엔드 뼈대와 SDD용 CLAUDE.md·README를 만든다. 새 FastAPI 프로젝트를 시작하거나 "템플릿대로 세팅해줘"라고 할 때, `/sdd-feat`로 첫 기능을 시작하기 전에 사용.
 ---
 
-# /fastapi-init
+# /sdd-init-fastapi
 
-새 FastAPI 프로젝트를 한 번 세팅하는 절차다. 평소 코드 규칙은 `.claude/stacks/fastapi.md`, SDD 진행은 `/feat`가 맡는다. 아래 단계를 순서대로 **모두** 수행한다(`CLAUDE.md`만 만들고 끝내지 않는다).
+새 FastAPI 프로젝트를 한 번 세팅하는 절차다. 평소 코드 규칙은 `.claude/stacks/fastapi.md`, SDD 진행은 `/sdd-feat`가 맡는다. 아래 단계를 순서대로 **모두** 수행한다(`CLAUDE.md`만 만들고 끝내지 않는다).
 
-1. **확인**: `.claude/stacks/fastapi.md`와 `.claude/skills/feat/`가 있는지 본다. 없으면 `.claude` 서브모듈이 초기화되지 않은 것이므로 `git submodule update --init`을 안내하고 멈춘다. `src/`가 이미 있으면 덮어쓰지 말고 무엇을 할지 묻는다.
+1. **확인**: `.claude/stacks/fastapi.md`와 `.claude/skills/sdd-feat/`가 있는지 본다. 없으면 `.claude` 서브모듈이 초기화되지 않은 것이므로 `git submodule update --init`을 안내하고 멈춘다. `src/`가 이미 있으면 덮어쓰지 말고 무엇을 할지 묻는다.
 2. **질문 한 번에 하기**(AskUserQuestion): 서비스 한 줄 설명 / DB(MongoDB, PostgreSQL, 없음) / 연동할 외부 시스템(없음 가능) / 이슈 트래커: GitHub Project owner·Project 번호(없음 가능. 있으면 `gh project view <번호> --owner <owner>`로 제목 확인).
 3. **uv 프로젝트 생성**
    - `uv init --bare --python 3.11` (이미 `pyproject.toml`이 있으면 생략)
@@ -43,7 +43,7 @@ description: 빈 프로젝트에 FastAPI + Python(uv) 백엔드 뼈대와 SDD용
 
    ## 고유 모듈
    - <경로>: <역할 한 줄. 함께 고쳐야 하는 곳이 있으면 그것도>
-   - 이슈 트래커: GitHub Project (`/feat`가 `.claude/skills/feat/github.md`로 연동, 비어 있으면 연동 안 함)
+   - 이슈 트래커: GitHub Project (`/sdd-feat`가 `.claude/skills/sdd-feat/tracker-github.md`로 연동, 비어 있으면 연동 안 함)
      - owner: `<owner>`
      - Project 번호: `<번호>`, 제목: `<제목>`
      (2번에서 "없음"이면 이 항목을 지운다)
@@ -76,7 +76,7 @@ description: 빈 프로젝트에 FastAPI + Python(uv) 백엔드 뼈대와 SDD용
    uv run ruff check . / uv run ruff format .
    uv run pytest
    - 코드 규칙: .claude/stacks/fastapi.md
-   - 개발 프로세스(SDD): .claude/skills/feat/sdd-template.md
+   - 개발 프로세스(SDD): .claude/skills/sdd-feat/process.md
    ```
 9. **확인**: `uv run ruff check .`, `uv run ruff format .`, `uv run pytest`가 모두 통과해야 한다.
-10. **보고**: 만든 파일 목록과 다음 할 일("`/feat <기능 설명>`으로 첫 기능 시작")을 알려준다.
+10. **보고**: 만든 파일 목록과 다음 할 일("`/sdd-feat <기능 설명>`으로 첫 기능 시작")을 알려준다.

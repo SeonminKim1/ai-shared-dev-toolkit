@@ -17,6 +17,18 @@ git submodule update --remote .claude   # 업데이트
 - 프로젝트 전용 지침은 `.claude/`가 아닌 루트 `CLAUDE.md`에 둔다
 - 자산 추가 규칙: [CONTRIBUTING.md](CONTRIBUTING.md)
 
+### 자동 업데이트 (선택)
+`~/.claude/settings.json`에 한 번 등록하면, 이 서브모듈이 있는 프로젝트에서 Claude를 켤 때 6시간에 1회 `origin/main`으로 갱신한다.
+로컬 커밋이 원격에 없거나 수정 중인 파일과 겹치면 건너뛴다. 갱신 후 상위 프로젝트에 `.claude`가 modified로 보이는 건 정상.
+
+```json
+"hooks": {
+  "SessionStart": [{ "hooks": [{ "type": "command",
+    "command": "f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/auto-update.sh\"; [ -x \"$f\" ] && \"$f\" || true",
+    "timeout": 15 }] }]
+}
+```
+
 ### 다른 프로젝트에서 개선해서 PR 보내기
 
 ```sh

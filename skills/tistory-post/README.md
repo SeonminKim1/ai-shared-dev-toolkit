@@ -32,8 +32,8 @@ types/ templates/ samples/ reference/   유형별 지침·HTML 뼈대·예시 �
 <br>
 
 ## 훅 연결 고리
-1. `/tistory-post <slug>`로 스킬이 켜지면 frontmatter의 훅이 등록된다 (스킬이 켜진 동안만 유효).
-2. Claude가 `posts/<slug>/post.html`을 Write/Edit 하면 `on-post-edit.sh`가 실행된다.
+1. `/tistory-post <slug>`로 스킬이 켜지면 frontmatter의 훅이 등록된다 (등록 후 세션이 끝날 때까지 유지).
+2. Claude가 `posts/<slug>/post.html`을 Write/Edit 하면 `on-post-edit.sh`가 실행된다. 훅의 `if` 필터 때문에 다른 파일을 Write/Edit 할 때는 실행되지 않는다. 같은 세션에서 다른 스킬을 쓸 때도 마찬가지다.
 3. 서식 규칙(이모지, 중첩 리스트, h2·ul·ol·table 외 인라인 스타일) 위반 → exit 2 → Claude가 메시지를 받고 고친다.
 4. 통과 → `scripts/preview.sh` 호출로 미리보기 갱신 (처음 생성이면 브라우저로 열림, 이후엔 새로고침).
 

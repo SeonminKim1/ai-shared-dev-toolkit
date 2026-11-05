@@ -8,7 +8,9 @@
 
 ## 구조
 - `skills/<이름>/SKILL.md` — 스킬. frontmatter(`name`, `description`) 필수. `name`은
-  디렉터리명과 같게, `description`에는 언제 써야 하는지(트리거)를 적는다.
+  디렉터리명과 같게, `description`에는 언제 써야 하는지(트리거)를 적는다. 사용자가 직접 호출할 때만
+  쓰는 스킬은 `disable-model-invocation: true`를 둔다(자동 호출을 막고 description이 컨텍스트에 올라가지 않음).
+  이런 스킬끼리 이어 갈 때는 Skill 도구 대신 다음 스킬의 SKILL.md를 읽게 한다.
 - `stacks/<stack>.md` — 언어·프레임워크별 코드 규칙. 소비 프로젝트 `CLAUDE.md`가 `@.claude/stacks/<stack>.md`로 import한다. 언어와 무관한 SDD 규칙은 방식별 `process.md`(`skills/sdd-feat/`, `skills/sdd-speckit/`)에 두고 여기에 다시 쓰지 않는다. 스택 파일은 두 방식이 함께 쓰므로 한쪽 방식에만 맞는 문구를 넣지 않는다.
 - `settings.json` — 루트에 권한(allow/deny)만 둔다. 지금은 개인용이라 둔 것이며, 소비 프로젝트 설정과 충돌하므로 훅은 넣지 않는다.
 - `hooks/` — 공용 훅 스크립트. 루트 settings.json 대신 사용자 설정(`~/.claude/settings.json`)에 등록한다 (예: `auto-update.sh`).

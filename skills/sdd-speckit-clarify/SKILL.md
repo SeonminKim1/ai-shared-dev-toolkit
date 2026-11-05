@@ -1,6 +1,7 @@
 ---
 name: sdd-speckit-clarify
 description: spec-kit 기반 SDD의 명확화 단계. `specs/NNN-<이름>/spec.md`의 빈틈을 분류별로 점검하고, 영향이 큰 질문을 최대 5개 하나씩 물어 답을 spec에 바로 반영한다(`/sdd-speckit-clarify [NNN] [집중할 부분]`). plan 전에 쓴다. 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-speckit-clarify

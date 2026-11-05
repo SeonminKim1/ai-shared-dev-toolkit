@@ -1,6 +1,7 @@
 ---
 name: sdd-speckit-converge
 description: spec-kit 기반 SDD의 수렴 단계. implement 후 현재 코드를 spec·plan·tasks·constitution과 대조해 남은 일을 찾고, 있으면 tasks.md 끝에 Convergence phase로 추가한다(`/sdd-speckit-converge [NNN]`). 수렴할 때까지 implement와 번갈아 쓴다. 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-speckit-converge

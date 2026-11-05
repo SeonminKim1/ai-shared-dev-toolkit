@@ -1,6 +1,7 @@
 ---
 name: sdd-speckit-implement
 description: spec-kit 기반 SDD의 구현 단계. `specs/NNN-<이름>/tasks.md`의 실행 흐름대로 작업을 하나씩 구현하고, 작업마다 멈춰 확인받은 뒤 커밋한다(`/sdd-speckit-implement [NNN] [작업 범위]`). 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-speckit-implement

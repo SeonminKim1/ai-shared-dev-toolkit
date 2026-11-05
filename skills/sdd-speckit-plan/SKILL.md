@@ -1,6 +1,7 @@
 ---
 name: sdd-speckit-plan
 description: spec-kit 기반 SDD의 계획 단계. `specs/NNN-<이름>/spec.md`로 plan.md, research.md, data-model.md, contracts/, quickstart.md를 만든다(`/sdd-speckit-plan [NNN] [기술 방향]`). Constitution Check를 통과해야 한다. 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-speckit-plan

@@ -1,6 +1,7 @@
 ---
 name: sdd-feat
 description: 기능 추가/수정을 SDD 프로세스(PRD → SPEC → PLAN → TASK → IMPLEMENT)로 진행하는 스킬. `/sdd-feat <기능 설명>`으로 짧은 설명만 받아 PRD 초안부터 시작하고, `/sdd-feat <feature-name> [변경 내용]`으로 기존 기능을 이어서 진행하거나 수정한다. 사용자가 직접 호출했을 때만 사용한다.
+disable-model-invocation: true
 ---
 
 # /sdd-feat

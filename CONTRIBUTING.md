@@ -9,7 +9,10 @@
 ## 구조
 - `skills/<이름>/SKILL.md` — 스킬. frontmatter(`name`, `description`) 필수. `name`은
   디렉터리명과 같게, `description`에는 언제 써야 하는지(트리거)를 적는다.
-- `hooks/` — 훅 스크립트. 소비 프로젝트 기준 경로는 `.claude/hooks/...`.
+- `hooks/` — 여러 스킬이 공용으로 쓸 훅 스크립트 자리 (현재 비어 있음). 쓰려면 `settings.json` 등록이 필요하다.
+- 스킬 전용 훅은 루트 `settings.json` 대신 스킬 frontmatter(`hooks:`)에 등록하고, 스크립트는 `skills/<이름>/hooks/`에 둔다
+  (루트 settings.json은 소비 프로젝트 설정과 충돌하고 모든 작업에 적용됨). 직접 실행하는 도구는 `scripts/`.
+- 훅·스크립트가 있는 스킬은 `skills/<이름>/README.md`에 연결 고리를 적는다 (사람용, 스킬 본문에 넣지 않음).
 
 ## 규칙
 - 자산은 가능하면 특정 프로젝트/언어에 종속되지 않게 작성한다. 개인용(특정 블로그·OS 전용 등)이면 README에 명시한다.

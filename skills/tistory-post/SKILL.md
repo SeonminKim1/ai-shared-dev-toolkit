@@ -2,6 +2,12 @@
 name: tistory-post
 description: 소재(.md/PDF)로 "잉여개발자" 티스토리 블로그 문체에 맞춘 붙여넣기용 글을 생성/갱신한다. topics/ 소재를 주거나 "글 써줘", "포스팅 만들어줘", "소재 추가"라고 할 때 사용.
 argument-hint: <slug>
+hooks:
+  PostToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "$CLAUDE_PROJECT_DIR/.claude/skills/tistory-post/hooks/on-post-edit.sh"
 ---
 
 # 티스토리 글 생성 (잉여개발자 스타일)
@@ -31,13 +37,13 @@ posts/<slug>/meta.md               ← 제목, 카테고리, 태그, 이미지/T
 1. 소재를 전부 읽는다 (파일명순). PDF가 있으면 `reference/pdf.md`를 따른다.
 2. **쓰기 전에 항상 유형을 묻는다** (AskUserQuestion, 소재에 `유형:`이 있으면 생략). 아래 유형 판단표로 후보 2~3개, 1순위에 `(추천)`, 선택지마다 "소재의 어떤 신호 때문인지"와 "h2 흐름"을 한 줄씩. 카테고리·제목 후보도 같이 물어도 된다 (질문 최대 3개).
 3. 정해진 유형의 `types/<type>.md`와 `templates/<type>.html`을 읽고 `post.html`, `meta.md`를 쓴다. 샘플은 구성이 애매할 때만 1개 읽는다.
-4. 작업 폴더에서 `<스킬 디렉터리>/scripts/preview.sh <slug>`로 미리보기를 연다. **클립보드 자동 복사 금지.** "복사해줘"라고 하면 `<스킬 디렉터리>/scripts/copy.sh <slug>`.
+4. post.html을 쓰면 훅(`hooks/on-post-edit.sh`)이 서식 규칙을 검사하고 미리보기를 만든다 (처음엔 브라우저로 열림). 훅이 위반을 알리면 고친다. **클립보드 자동 복사 금지.** "복사해줘"라고 하면 `<스킬 디렉터리>/scripts/copy.sh <slug>`.
 5. 응답은 유형+근거 한 줄, 제목/카테고리, 파일 경로, TODO, "미리보기 열림 (복사 버튼)"만. 본문을 채팅에 다시 출력하지 않는다.
 
 ### 2) 소재 추가
 - 기존 post.html을 읽고 **그 위에 통합**한다 (재작성 X, 유형 재질문 X). 사용자가 직접 고친 부분은 유지.
 - 기존 섹션 보강이면 그 섹션에, 새 주제면 h2 추가 후 번호 재정렬.
-- meta.md 변경 이력에 "NN.md 반영: 무엇을 어디에" 한 줄. preview.sh 재실행.
+- meta.md 변경 이력에 "NN.md 반영: 무엇을 어디에" 한 줄. 미리보기는 훅이 갱신.
 
 ### 3) 사실성
 - 소재에 없는 **개인 경험·수치·날짜·회사명은 지어내지 않는다.** 빈 곳은 본문에 `[TODO: 필요한 것]`, meta.md에도 기록.

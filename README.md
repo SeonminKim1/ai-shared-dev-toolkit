@@ -1,5 +1,5 @@
 # ai-shared-dev-toolkit
-프로젝트에 `.claude` 서브모듈로 붙여 쓰는 AI 개발 자산(Skills, Hooks) 모음. Claude Code, Cursor에서 사용.
+프로젝트에 `.claude` 서브모듈로 붙여 쓰는 AI 개발 자산(Skills, 스킬 전용 Hooks) 모음. Claude Code, Cursor에서 사용.
 
 | 자산 | 종류 | 설명 |
 |---|---|---|
@@ -47,5 +47,6 @@ git commit -am "<설명>" && git push -u origin HEAD && gh pr create
 
 - 소재: `topics/<slug>.md`, 나눠 줄 땐 `topics/<slug>/01.md`, `02.md` … 추가 후 "소재 추가했어"
 - 결과: 미리보기의 `복사` 버튼 → 티스토리 기본모드에 Cmd+V. 제목·태그는 `meta.md`
+- 훅: post.html 저장 시 서식 검사 + 미리보기 자동 갱신 (스킬 실행 중에만). 구조: [skills/tistory-post/README.md](skills/tistory-post/README.md)
 - 스크립트: `.claude/skills/tistory-post/scripts/preview.sh <slug>`, `copy.sh [--html] <slug>`
 - `.gitignore`: `posts/*/preview.html`

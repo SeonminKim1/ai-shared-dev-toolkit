@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 이 폴더의 `process.md` 단계대로 기능을 진행하는 실행 절차다. 규칙(Grill, 문서 관리, 커밋, 진행 보고, 작업 확인)은 `process.md`가 기준이고, 여기에는 순서만 적는다.
 
-시작 전에 읽는다: `CLAUDE.md`, 이 폴더의 `process.md`, 스택 파일(`CLAUDE.md`가 import하는 `.claude/stacks/<stack>.md`의 "스택 연결 값"). `src/`가 없는 새 프로젝트면 먼저 `/sdd-init-<stack>`(예: `/sdd-init-fastapi`)을 권한다. 문서는 이 폴더의 `templates/<단계>.md`로 쓴다. SPEC만 접두사로 고른다: `api-` → `spec-api.md`, `component-` → `spec-component.md`, `domain-` → `spec-domain.md`. 한 기능이 둘에 걸치면(예: API와 컴포넌트를 함께 추가) 기능을 나누자고 제안한다.
+시작 전에 읽는다: `CLAUDE.md`, 이 폴더의 `process.md`, 스택 파일(`CLAUDE.md`가 import하는 `.claude/stacks/<stack>.md`의 "스택 연결 값"). `src/`가 없는 새 프로젝트면 먼저 `/sdd-init-<stack>`(예: `/sdd-init-fastapi`)을 권한다. 문서는 이 폴더의 `templates/<단계>.md`로 쓴다. SPEC만 접두사로 고른다: `api-` → `spec-api.md`, `ui-` → `spec-ui.md`, `component-` → `spec-component.md`, `domain-` → `spec-domain.md`. 한 기능이 둘에 걸치면(예: API와 컴포넌트를 함께 추가) 기능을 나누자고 제안한다.
 
 ## 사용법
 ```

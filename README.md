@@ -43,7 +43,7 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 /sdd-feat api-order-create 쿠폰 필드 추가        # 기존 기능 수정
 ```
 
-지원 스택은 **FastAPI**(init 스킬 포함)와 **Spring Boot**(규칙 초안)이며, 스택 규칙(`stacks/`)은 두 방식이 같이 쓴다.
+지원 스택은 **FastAPI**(init 스킬 포함), **Spring Boot**(규칙 초안), **React**(프론트엔드, init 스킬 없음)이며, 스택 규칙(`stacks/`)은 두 방식이 같이 쓴다.
 
 - sdd-speckit: 단계별 산출물 · upstream과 다른 점 · sdd-feat 문서 옮기기 → [skills/sdd-speckit/README.md](skills/sdd-speckit/README.md)
 - sdd-feat: 단계별 설명 · 파일 구성 · 다른 언어 추가 → [skills/sdd-feat/README.md](skills/sdd-feat/README.md)

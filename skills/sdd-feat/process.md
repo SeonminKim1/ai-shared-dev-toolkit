@@ -34,13 +34,13 @@
 | **추가 완료 항목** | 스택에만 있는 완료 체크리스트 항목 |
 
 ## 한눈에 보기
-기능 하나당 `docs/<feature-name>/` 폴더 하나에 아래 문서를 차례로 만듭니다. `<feature-name>`은 kebab-case에 접두사를 붙입니다: HTTP API `api-`, 백그라운드 컴포넌트 `component-`, 도메인 모델만 정의 `domain-`.
+기능 하나당 `docs/<feature-name>/` 폴더 하나에 아래 문서를 차례로 만듭니다. `<feature-name>`은 kebab-case에 접두사를 붙입니다: HTTP API `api-`, 화면·UI `ui-`, 백그라운드 컴포넌트 `component-`, 도메인 모델만 정의 `domain-`.
 
 | 단계 | 답하는 질문 | 산출물 (템플릿: `.claude/skills/sdd-feat/templates/`) | 넘어가는 기준 |
 |---|---|---|---|
 | 0. 방향성 | 이 서비스는 무엇을 하나? | `CLAUDE.md` 요구사항 섹션 | 기능이 기존 요구사항과 충돌하지 않음 |
 | 1. PRD | 왜, 무엇을 만드나? | `prd.md` | 하는 일과 규칙이 한두 문단으로 설명됨 |
-| 2. SPEC | 어떻게 동작하나? | `spec.md` (접두사에 맞는 템플릿: `api-` → `spec-api.md`, `component-` → `spec-component.md`, `domain-` → `spec-domain.md`) | 템플릿 항목이 빠짐없이 채워짐 |
+| 2. SPEC | 어떻게 동작하나? | `spec.md` (접두사에 맞는 템플릿: `api-` → `spec-api.md`, `ui-` → `spec-ui.md`, `component-` → `spec-component.md`, `domain-` → `spec-domain.md`) | 템플릿 항목이 빠짐없이 채워짐 |
 | 3. PLAN | 코드 어디를 바꾸나? | `plan.md` | 레이어별 변경 파일과 DB 변경이 정리됨 |
 | 4. TASK | 어떤 순서로 하나? | `task.md` | 작업 크기·순서·병렬 묶음을 사용자가 확인함 |
 | 5. IMPLEMENT | 제대로 동작하나? | 코드 + `implement.md` | 완료 체크리스트 통과 |

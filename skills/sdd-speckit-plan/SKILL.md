@@ -18,7 +18,7 @@ disable-model-invocation: true
 
 ## 3. Phase 1: 설계
 1. **data-model.md** (`templates/data-model.md`): spec의 핵심 엔티티 → 필드·타입·제약·인덱스·상태 전이. 기존 모델만 쓰면 "변경 없음 — <경로>".
-2. **contracts/**: 접두사로 고른다. `api-` → 엔드포인트마다 `templates/contract-api.md`, `component-` → `templates/contract-component.md`, `domain-` → 만들지 않는다(data-model.md가 계약). spec 엣지 케이스마다 에러 표 행이 있어야 한다. 기존 contracts의 에러 식별자·응답 형태를 맞춘다.
+2. **contracts/**: 접두사로 고른다. `api-` → 엔드포인트마다 `templates/contract-api.md`, `ui-` → 화면마다 `templates/contract-ui.md`, `component-` → `templates/contract-component.md`, `domain-` → 만들지 않는다(data-model.md가 계약). spec 엣지 케이스마다 에러 표 행이 있어야 한다. 기존 contracts의 에러 식별자·응답 형태를 맞춘다.
 3. **quickstart.md** (`templates/quickstart.md`): 정상·대표 에러 시나리오를 스택 연결 값의 **API 확인 방법**·**확인 명령**으로.
 4. plan의 변경 파일·DB 변경·외부 의존성을 채우고 Constitution Check를 다시 확인한다.
 

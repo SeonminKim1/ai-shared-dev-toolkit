@@ -15,7 +15,10 @@ SDD 방법론(`process.md`)의 단계에서 스택마다 달라지는 값이다.
 | **TASK 기본 순서** | T1 models/schemas 정의 → T2 repository 쿼리, T3 `ErrorEnum` 항목 추가 → T4 service 로직 + service 테스트 → T5 router 연결(컴포넌트는 lifespan 등록), 정상/에러 케이스 확인, 문서 갱신 |
 | **컴포넌트 구동 위치** | FastAPI lifespan 백그라운드 태스크 |
 | **확인 명령** | `uv run ruff check .`, `uv run ruff format .`, `uv run pytest` |
-| **API 확인 방법** | 서버의 `/docs`(Swagger UI)에서 직접 호출, `/redoc`에서 문서 확인 |
+| **동작 확인 방법** | 서버의 `/docs`(Swagger UI)에서 직접 호출, `/redoc`에서 문서 확인 |
+| **데이터 변경** | 컬렉션·테이블 / 필드 / 인덱스·유니크 제약 / 기존 데이터 마이그레이션 |
+| **엣지 케이스** | 권한(남의 리소스, 식별자 없음·잘못됨), 같은 요청의 동시·중복 처리(멱등성), DB 실패·타임아웃. 코드에서는 유니크 인덱스·트랜잭션·락·재시도로 지킨다 |
+| **README 갱신 대상** | README의 API 표(Method, Path, 설명) |
 | **추가 완료 항목** | `/redoc`에서 요청·응답 example이 실제 값으로 보이는지 확인 (아래 "API 문서 (OpenAPI)") |
 
 ## Python 규칙

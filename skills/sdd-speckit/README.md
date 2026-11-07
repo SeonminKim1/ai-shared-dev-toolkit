@@ -30,10 +30,10 @@
 /sdd-speckit-implement 004 주문 목록 정렬 버그 수정                   # 버그·문구 수정은 바로 implement
 ```
 
-**새 프로젝트** : `/sdd-init-fastapi`에서 SDD 방식으로 `sdd-speckit`을 고르면 CLAUDE.md·README가 이 방식 기준으로 만들어진다.<br>
+**새 프로젝트** : `/sdd-init-fastapi`(React는 `/sdd-init-react`)에서 SDD 방식으로 `sdd-speckit`을 고르면 CLAUDE.md·README가 이 방식 기준으로 만들어진다.<br>
 **대상 기능** : specify 외 단계는 인자(`004`) → 현재 브랜치(`004-...`) 순으로 찾고, 둘 다 없으면 `specs/` 목록을 보여주고 묻는다.<br>
 **끝까지** : 인자 끝에 "끝까지"를 붙이면 단계 사이 확인만 생략하고 다음 단계를 이어 호출한다. 질문과 implement의 작업별 확인은 그대로 한다.<br>
-**작은 변경** : 버그·문구 수정은 바로 implement(`tasks.md`에 변경 phase 추가). 기존 기능의 동작 변경은 specify로 spec을 고친 뒤 plan부터. 새 API·컴포넌트는 specify부터.<br>
+**작은 변경** : 버그·문구 수정은 바로 implement(`tasks.md`에 변경 phase 추가). 기존 기능의 동작 변경은 specify로 spec을 고친 뒤 plan부터. 새 API·화면·컴포넌트는 specify부터.<br>
 **이슈 트래커** : `CLAUDE.md`에 GitHub Project가 설정돼 있을 때만 작업별 이슈·PR을 연동한다(`sdd-feat/tracker-github.md` 재사용). 기능 하나만 빼려면 tasks 단계에서 그렇게 답하면 된다.
 
 <br>

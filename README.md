@@ -9,6 +9,7 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 | 명령 | 하는 일 |
 |---|---|
 | [`/sdd-init-fastapi`](#-sdd) | 새 FastAPI 프로젝트 뼈대 생성 + SDD 방식 선택 (첫 기능 전에 1회) |
+| [`/sdd-init-react`](#-sdd) | 새 React(Vite) 프로젝트 뼈대 생성 + SDD 방식 선택 (첫 기능 전에 1회) |
 | [`/sdd-speckit-specify <기능 설명>`](#-sdd) | spec-kit 기반 SDD로 기능 추가·수정 (이후 단계마다 `/sdd-speckit-<단계>`) |
 | [`/sdd-feat <기능 설명>`](#-sdd) | 자체 5단계 SDD로 기능 추가·수정 (명령 하나로 진행) |
 | [`/learning-examples <라이브러리>`](#-learning-examples) | 라이브러리 학습용 예제를 계획하고 단계별로 작성 |
@@ -30,7 +31,7 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 
 ```sh
 # 0. 새 프로젝트면 먼저 1회: 뼈대·CLAUDE.md·README 생성, SDD 방식 선택
-/sdd-init-fastapi
+/sdd-init-fastapi    # React 프론트엔드면 /sdd-init-react
 
 # sdd-speckit
 /sdd-speckit-specify 유저가 주문을 생성한다.   # specs/004-api-order-create/ + 브랜치
@@ -43,7 +44,7 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 /sdd-feat api-order-create 쿠폰 필드 추가        # 기존 기능 수정
 ```
 
-지원 스택은 **FastAPI**(init 스킬 포함), **Spring Boot**(규칙 초안), **React**(프론트엔드, init 스킬 없음)이며, 스택 규칙(`stacks/`)은 두 방식이 같이 쓴다.
+지원 스택은 **FastAPI**(init 스킬 포함), **Spring Boot**(규칙 초안), **React**(프론트엔드, init 스킬 포함)이며, 스택 규칙(`stacks/`)은 두 방식이 같이 쓴다.
 
 - sdd-speckit: 단계별 산출물 · upstream과 다른 점 · sdd-feat 문서 옮기기 → [skills/sdd-speckit/README.md](skills/sdd-speckit/README.md)
 - sdd-feat: 단계별 설명 · 파일 구성 · 다른 언어 추가 → [skills/sdd-feat/README.md](skills/sdd-feat/README.md)

@@ -26,13 +26,13 @@
 - **목표**: 
 - **독립 테스트**: 
 - [ ] T005 [US1] 비즈니스 로직 + 테스트 — `<service>`, `<tests>` — 선행: T003, T004
-- [ ] T006 [US1] 진입점 연결(API 라우팅·컴포넌트 등록) + 테스트 — `<router>`, `<tests>` — 선행: T005
+- [ ] T006 [US1] 진입점 연결(API 라우팅·화면 연결·컴포넌트 등록) + 테스트 — `<router>`, `<tests>` — 선행: T005
 
 ## Phase 4: 유저 스토리 2 - <제목> (P2)
 (같은 형식)
 
 ## Phase N: 마무리 (Polish)
-- [ ] T0NN 문서 갱신(README API 표 등), quickstart 시나리오 확인 — 선행: 모든 스토리
+- [ ] T0NN 문서 갱신(스택 연결 값의 README 갱신 대상), quickstart 시나리오 확인 — 선행: 모든 스토리
 
 ## 실행 흐름 (Dependencies & Execution Order)
 <!-- 선행 관계로 만든 순차/병렬 단계. implement는 이 순서로 진행한다 -->

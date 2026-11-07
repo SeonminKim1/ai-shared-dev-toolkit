@@ -21,7 +21,7 @@ SDD(Spec-Driven Development)는 "무엇을, 어떻게 만들지"를 문서(spec)
 /sdd-feat api-order-create 쿠폰 필드 추가   # 기존 기능 수정
 ```
 
-**작은 변경**은 단계를 줄인다: 버그·문구 수정은 바로 5단계, 기존 기능의 동작 변경은 `spec.md`를 고친 뒤 3~5단계, 새 API·컴포넌트는 1단계부터.<br>
+**작은 변경**은 단계를 줄인다: 버그·문구 수정은 바로 5단계, 기존 기능의 동작 변경은 `spec.md`를 고친 뒤 3~5단계, 새 API·화면·컴포넌트는 1단계부터.<br>
 **새 프로젝트**는 먼저 `/sdd-init-fastapi`(React는 `/sdd-init-react`)에서 SDD 방식으로 `sdd-feat`을 고른다.
 
 방법론은 언어와 무관하고, 언어별 규칙만 스택 파일로 더한다. 지금은 **FastAPI**, **Spring Boot**(초안), **React**(프론트엔드)를 지원하며, 프로젝트에만 해당하는 규칙은 각 프로젝트 루트 `CLAUDE.md`에 둔다.

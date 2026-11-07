@@ -18,7 +18,10 @@ SDD 방법론(`process.md`)의 단계에서 스택마다 달라지는 값이다.
 | **TASK 기본 순서** | T1 types 정의 → T2 data 접근, T3 `ErrorCode` 항목 추가 → T4 lib 순수 로직 + 테스트 → T5 hook(상태·흐름) + 테스트 → T6 components·pages 연결 + 컴포넌트 테스트, 브라우저에서 정상/에러 상태 확인, 문서 갱신 |
 | **컴포넌트 구동 위치** | 빌드 타임 작업은 `scripts/`(`npm run <이름>`, `tsx`로 실행), 브라우저 백그라운드 작업은 Web Worker·Service Worker |
 | **확인 명령** | `npm run lint`, `npm run format`, `npm run typecheck`, `npm test`, `npm run build` |
-| **API 확인 방법** | `npm run dev`로 띄워 브라우저에서 spec의 화면 상태·사용자 동작을 직접 재현한다. 데이터 요청은 DevTools Network 탭에서 확인 |
+| **동작 확인 방법** | `npm run dev`로 띄워 브라우저에서 spec의 화면 상태·사용자 동작을 직접 재현한다. 데이터 요청은 DevTools Network 탭에서 확인 |
+| **데이터 변경** | 정적 데이터 파일(`public/` 아래 JSON 등)의 구조, `localStorage`·`IndexedDB`의 키와 형식, 이미 저장된 데이터와의 호환(버전 키 등) |
+| **엣지 케이스** | 탭 전환·백그라운드에서 타이머·애니메이션, 새로고침·뒤로가기 때 진행 상태, 언마운트 뒤 도착한 비동기 결과, 연타·중복 클릭, 느린 네트워크·오프라인, 360px 폭·키보드 조작. 코드에서는 effect cleanup(타이머·구독 해제), `AbortController`, 상태 전이를 reducer 한 곳에 모으는 방식으로 지킨다 |
+| **README 갱신 대상** | README의 화면 표(경로, 설명) |
 | **추가 완료 항목** | `npm run preview`로 빌드 결과 확인, 모바일 폭(360px)과 데스크톱에서 레이아웃 확인, 브라우저 콘솔에 에러·경고 없음 |
 
 ## TypeScript 규칙

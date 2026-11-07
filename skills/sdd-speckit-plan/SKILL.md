@@ -19,19 +19,19 @@ disable-model-invocation: true
 ## 3. Phase 1: 설계
 1. **data-model.md** (`templates/data-model.md`): spec의 핵심 엔티티 → 필드·타입·제약·인덱스·상태 전이. 기존 모델만 쓰면 "변경 없음 — <경로>".
 2. **contracts/**: 접두사로 고른다. `api-` → 엔드포인트마다 `templates/contract-api.md`, `ui-` → 화면마다 `templates/contract-ui.md`, `component-` → `templates/contract-component.md`, `domain-` → 만들지 않는다(data-model.md가 계약). spec 엣지 케이스마다 에러 표 행이 있어야 한다. 기존 contracts의 에러 식별자·응답 형태를 맞춘다.
-3. **quickstart.md** (`templates/quickstart.md`): 정상·대표 에러 시나리오를 스택 연결 값의 **API 확인 방법**·**확인 명령**으로.
-4. plan의 변경 파일·DB 변경·외부 의존성을 채우고 Constitution Check를 다시 확인한다.
+3. **quickstart.md** (`templates/quickstart.md`): 정상·대표 에러 시나리오를 스택 연결 값의 **동작 확인 방법**·**확인 명령**으로.
+4. plan의 변경 파일·데이터 변경·외부 의존성을 채우고 Constitution Check를 다시 확인한다.
 
 ## 4. 마무리
 1. **Grill 체크리스트**로 점검하고, 설계 대안 중 정할 수 없는 것만 묻는다(최대 3개).
-2. 요약을 보여주고 확인받는다: 변경 파일(레이어 순), DB 변경, 계약 목록, research 결정, Constitution Check 결과.
+2. 요약을 보여주고 확인받는다: 변경 파일(레이어 순), 데이터 변경, 계약 목록, research 결정, Constitution Check 결과.
 3. 다음 안내: `/sdd-speckit-tasks`.
 
 ## Grill 체크리스트
 - 레이어 규칙을 어기는 곳이 없는가? 변경 파일이 레이어 순서로 빠짐없이 나열됐는가?
-- DB 인덱스·유니크 제약·기존 데이터 마이그레이션이 필요한가?
-- spec의 동시성·실패 케이스를 코드에서 어떻게 지키는가? (락, 유니크 인덱스, 트랜잭션, 재시도)
-- 모든 엣지 케이스에 에러 식별자와 상태 코드가 있는가?
-- 단위 테스트가 가짜 객체로 대체한 동작(DB 정밀도·인덱스, 외부 시스템)을 quickstart가 실제로 확인하는가?
-- 스택의 API 문서 규칙을 요청 쪽(path·query·header·body의 설명·example)과 응답 쪽(성공·에러 example) 모두에 적용했는가? 새 파라미터마다 example 상수가 변경 파일에 있는가?
+- 스택 연결 값의 **데이터 변경**(저장 구조, 인덱스·제약, 기존 데이터 호환)이 필요한가?
+- spec의 동시성·실패 케이스를 코드에서 어떻게 지키는가? (스택 연결 값의 엣지 케이스에 적힌 수단)
+- 모든 엣지 케이스에 에러 식별자와 결과(에러 표현)가 있는가?
+- 단위 테스트가 가짜 객체로 대체한 동작(DB 정밀도·인덱스, 외부 시스템, 브라우저 동작)을 quickstart가 실제로 확인하는가?
+- (API 기능) 스택의 API 문서 규칙을 요청 쪽(path·query·header·body의 설명·example)과 응답 쪽(성공·에러 example) 모두에 적용했는가? 새 파라미터마다 example 상수가 변경 파일에 있는가?
 - 더 단순한 대안은 없는가? 되돌리기 어려운 결정이나 기존 기능에 주는 영향이 있는가?

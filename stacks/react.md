@@ -2,9 +2,10 @@
 
 언어와 무관한 SDD 방법론(`.claude/skills/sdd-feat/process.md` 또는 `.claude/skills/sdd-speckit/process.md`)에 React + TypeScript(Vite) 프론트엔드 규칙을 더한 스택 파일이다. 소비 프로젝트의 `CLAUDE.md`가 `@.claude/stacks/react.md`로 import한다. **같은 스택의 어느 프로젝트에도 맞는 내용만** 둔다. 이 프로젝트에만 해당하는 화면·요구사항·스타일링 방식은 `CLAUDE.md`에 둔다.
 
-> Vite + React + TypeScript, npm, ESLint·Prettier, Vitest·React Testing Library 기준이다. 아직 `sdd-init-react` 스킬이 없으므로 새 프로젝트는 아래 "새 프로젝트" 순서로 만들고, `CLAUDE.md`는 `sdd-init-fastapi`의 7번 틀에서 import 경로만 바꿔 쓴다.
+> Vite + React + TypeScript, npm, oxlint·Prettier, Vitest·React Testing Library 기준이다.
 
 - **SDD**: 기능 추가·수정은 `/sdd-feat`(`.claude/skills/sdd-feat/process.md`) 또는 `/sdd-speckit-specify`부터(`.claude/skills/sdd-speckit/process.md`) 진행한다. 기능 문서가 `docs/<feature-name>/`에 있으면 sdd-feat, `specs/NNN-<이름>/`에 있으면 sdd-speckit 방식이다. spec 없이 구현하지 않고, spec·plan에 없는 상황은 추측하지 말고 묻는다.
+- **새 프로젝트**: `src/`가 없으면 `/sdd-init-react`로 먼저 뼈대를 만든다.
 - **기능 접두사**: 화면·UI 기능은 `ui-`, 화면 없는 순수 로직·데이터 모델은 `domain-`, 빌드 타임 스크립트·Worker는 `component-`. 백엔드 API를 함께 만들면 그 API는 백엔드 스택 프로젝트에서 `api-`로 다룬다.
 
 ## 스택 연결 값
@@ -20,15 +21,8 @@ SDD 방법론(`process.md`)의 단계에서 스택마다 달라지는 값이다.
 | **API 확인 방법** | `npm run dev`로 띄워 브라우저에서 spec의 화면 상태·사용자 동작을 직접 재현한다. 데이터 요청은 DevTools Network 탭에서 확인 |
 | **추가 완료 항목** | `npm run preview`로 빌드 결과 확인, 모바일 폭(360px)과 데스크톱에서 레이아웃 확인, 브라우저 콘솔에 에러·경고 없음 |
 
-## 새 프로젝트
-1. `npm create vite@latest . -- --template react-ts` 후 `npm install`
-2. `npm install -D prettier eslint-config-prettier vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event tsx`
-3. `package.json` scripts: `"lint": "eslint ."`, `"format": "prettier --write ."`, `"typecheck": "tsc -b --noEmit"`, `"test": "vitest run"`, `"build": "tsc -b && vite build"`, `"preview": "vite preview"`
-4. `vite.config.ts`에 `test: { environment: "jsdom", setupFiles: ["src/test/setup.ts"] }`, `src/test/setup.ts`에 `import "@testing-library/jest-dom/vitest";`
-5. 아래 "레이어드 아키텍처"의 디렉터리를 만든다. `.gitignore`에 `node_modules/`, `dist/`, `.env*`(`.env.example` 제외)
-
 ## TypeScript 규칙
-- 패키지 관리·스크립트 실행은 `npm`만 쓴다(`yarn`/`pnpm` 혼용 금지). lint는 ESLint, 포맷은 Prettier만 쓴다.
+- 패키지 관리·스크립트 실행은 `npm`만 쓴다(`yarn`/`pnpm` 혼용 금지). lint는 Vite 템플릿 기본 linter(지금은 oxlint), 포맷은 Prettier만 쓴다.
 - `tsconfig`는 `strict: true`. `any`는 쓰지 않는다(불가피하면 `unknown` + 좁히기). `@ts-ignore` 금지, 꼭 필요하면 `@ts-expect-error <이유>`.
 - export하는 함수는 반환 타입을 명시한다. 컴포넌트 props는 `<Name>Props` 타입으로 선언한다.
 - 프로젝트에서 정의한 함수에 인자를 3개 이상 넘길 때는 객체 하나로 받는다(예: `buildChoices({ answer, pool, count })`). 위치만 보고 어느 값이 어느 인자인지 헷갈리지 않게 하기 위함이다.

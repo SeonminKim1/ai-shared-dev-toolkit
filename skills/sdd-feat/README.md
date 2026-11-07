@@ -24,7 +24,7 @@ SDD(Spec-Driven Development)는 "무엇을, 어떻게 만들지"를 문서(spec)
 **작은 변경**은 단계를 줄인다: 버그·문구 수정은 바로 5단계, 기존 기능의 동작 변경은 `spec.md`를 고친 뒤 3~5단계, 새 API·컴포넌트는 1단계부터.<br>
 **새 프로젝트**는 먼저 `/sdd-init-fastapi`에서 SDD 방식으로 `sdd-feat`을 고른다.
 
-방법론은 언어와 무관하고, 언어별 규칙만 스택 파일로 더한다. 지금은 **FastAPI**, **Spring Boot**(초안)를 지원하며, 프로젝트에만 해당하는 규칙은 각 프로젝트 루트 `CLAUDE.md`에 둔다.
+방법론은 언어와 무관하고, 언어별 규칙만 스택 파일로 더한다. 지금은 **FastAPI**, **Spring Boot**(초안), **React**(프론트엔드)를 지원하며, 프로젝트에만 해당하는 규칙은 각 프로젝트 루트 `CLAUDE.md`에 둔다.
 
 <br>
 
@@ -33,11 +33,12 @@ SDD(Spec-Driven Development)는 "무엇을, 어떻게 만들지"를 문서(spec)
 | 파일 | 구분 | 내용 |
 |---|---|---|
 | `skills/sdd-feat/process.md` | 공통 | 방법론: 단계별 기준, Grill(질문 규칙), 문서 관리·커밋 규칙 |
-| `skills/sdd-feat/templates/` | 공통 | 단계별 문서 템플릿 (spec은 `api-`·`component-`·`domain-` 접두사별) |
+| `skills/sdd-feat/templates/` | 공통 | 단계별 문서 템플릿 (spec은 `api-`·`ui-`·`component-`·`domain-` 접두사별) |
 | `skills/sdd-feat/tracker-github.md` | 공통 | GitHub Project 이슈·상태·PR 연동 (`CLAUDE.md`에 owner·번호가 있을 때만). `sdd-speckit`도 재사용 |
 | `skills/sdd-init-fastapi/` | 스택 | 부트스트랩 절차와 기본 코드(`files/`) |
 | `stacks/fastapi.md` | 스택 | 레이어·DI·에러·테스트 규칙과 "스택 연결 값" |
 | `stacks/spring-boot.md` | 스택 | Spring Boot·Java 규칙 초안 |
+| `stacks/react.md` | 스택 | React·TypeScript(Vite) 프론트엔드 규칙과 새 프로젝트 순서 |
 
 <br>
 

@@ -4,7 +4,7 @@
 
 ## 개요
 
-[GitHub spec-kit](https://github.com/github/spec-kit)(v1.3.0 기준)의 단계·산출물·품질 장치를 따르는 SDD 스킬 묶음. `specify` CLI·`.specify/` 스크립트·extension 훅 없이 툴킷 안에서 동작하고, 본문은 한국어로 다시 썼다. 기능별 문서는 `specs/NNN-<접두사>-<이름>/`에, 브랜치도 같은 이름으로 생긴다(접두사: `api-`, `component-`, `domain-`).
+[GitHub spec-kit](https://github.com/github/spec-kit)(v1.3.0 기준)의 단계·산출물·품질 장치를 따르는 SDD 스킬 묶음. `specify` CLI·`.specify/` 스크립트·extension 훅 없이 툴킷 안에서 동작하고, 본문은 한국어로 다시 썼다. 기능별 문서는 `specs/NNN-<접두사>-<이름>/`에, 브랜치도 같은 이름으로 생긴다(접두사: `api-`, `ui-`, `component-`, `domain-`).
 
 이 폴더에는 `SKILL.md`가 없다. 단계별 스킬(`skills/sdd-speckit-<단계>/`)이 함께 쓰는 규칙·템플릿만 둔다.
 
@@ -51,7 +51,7 @@
 | | implement는 작업마다 멈추고 확인 → 커밋, GitHub Project 연동(`sdd-feat/tracker-github.md` 재사용) |
 | | 없앤 것: `specify` CLI, `.specify/`(scripts, feature.json, extensions.yml 훅), preset, `checklist` 명령 |
 
-contracts는 기능 접두사로 고른다: `api-` → `contract-api.md`(엔드포인트별, 에러 표 포함), `component-` → `contract-component.md`, `domain-` → 없음(data-model이 계약).
+contracts는 기능 접두사로 고른다: `api-` → `contract-api.md`(엔드포인트별, 에러 표 포함), `ui-` → `contract-ui.md`(화면별), `component-` → `contract-component.md`, `domain-` → 없음(data-model이 계약).
 
 <br>
 
@@ -61,7 +61,7 @@ contracts는 기능 접두사로 고른다: `api-` → `contract-api.md`(엔드�
 |---|---|
 | `skills/sdd-speckit/process.md` | 공통 규칙: 단계, 기능 디렉터리·브랜치, constitution 범위, 문서 관리, 질문, 커밋, 이슈 연동 |
 | `skills/sdd-speckit/constitution.md` | 공통 원칙 I~VI |
-| `skills/sdd-speckit/templates/` | spec, checklist, plan, research, data-model, contract-api·component, quickstart, tasks, implement |
+| `skills/sdd-speckit/templates/` | spec, checklist, plan, research, data-model, contract-api·ui·component, quickstart, tasks, implement |
 | `skills/sdd-speckit-<단계>/SKILL.md` | 단계별 절차와 Grill 체크리스트 |
 | `skills/sdd-speckit/LICENSE-spec-kit` | upstream MIT 라이선스와 기준 버전 |
 | `stacks/<stack>.md` | 스택 규칙 (`sdd-feat`와 같이 씀). 다른 언어 추가는 [../sdd-feat/README.md](../sdd-feat/README.md#다른-언어-추가) 참고 |

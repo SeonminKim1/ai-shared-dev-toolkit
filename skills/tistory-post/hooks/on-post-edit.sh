@@ -13,7 +13,8 @@ ERRORS=$(perl -CSD -0777 -ne '
   # 중첩 리스트
   pos = undef; my $d = 0;
   while (/<(\/?)(ul|ol)\b/g) { if ($1) { $d-- } elsif (++$d > 1) { push @e, "중첩 리스트 금지 (ul/ol 안에 ul/ol)"; last } }
-  push @e, "중첩 리스트 금지 (li 안 <br />- 줄, 예시 한 줄만 허용)" if /<li\b(?:(?!<\/li>).)*<br\s*\/?>\s*-\s(?!예)/s;
+  # li 안 <br />- 하위 줄은 4개까지 허용, 5개 이상이면 소제목으로 분리
+  while (/<li\b((?:(?!<\/li>).)*)<\/li>/sg) { my $c = () = $1 =~ /<br\s*\/?>\s*-\s/g; if ($c > 4) { push @e, "li 안 <br />- 하위 줄 ${c}개 (4개까지, 그 이상은 소제목으로 분리)"; last } }
   # 인라인 스타일은 스니펫의 h2/ul/ol/table만
   if (/<((?!h2\b|ul\b|ol\b|table\b)\w+)[^>]*\sstyle=/) { push @e, "인라인 스타일 금지: <$1 style=...>" }
   print join("\n", @e);

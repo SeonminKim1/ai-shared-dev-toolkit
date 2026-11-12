@@ -32,6 +32,7 @@ SDD 방법론(`process.md`)의 단계에서 스택마다 달라지는 값이다.
 - 검증 함수 이름: 틀리면 예외를 던지면 `validate<대상>`, 참/거짓만 돌려주면 `is<대상>`.
 - 모든 export 함수·컴포넌트와 복잡한 로직에는 짧은 주석(JSDoc 한 줄)을 단다.
 - 환경 변수는 `import.meta.env.VITE_*`만 쓰고, `src/data/`나 `src/config.ts` 한 곳에서 읽는다. 브라우저에 노출되므로 비밀 값은 넣지 않는다.
+- `scripts/`가 import하는 `src/` 파일(타입·순수 로직)과 `scripts/` 안의 파일은 상대 import에 `.ts` 확장자를 붙인다(예: `import type { QuizItem } from '../types/quiz.ts'`). 스크립트용 `tsconfig.node.json`은 nodenext 방식이라 확장자가 없으면 `typecheck`·`build`가 실패하고, 앱용 설정(bundler)도 `.ts` 확장자를 허용해서 양쪽 다 통과한다.
 
 ## 레이어드 아키텍처
 화면 흐름은 **Page → Hook → Lib / Data** 순서를 따른다. 상태와 규칙을 컴포넌트 안에 직접 쓰지 않는다.
@@ -46,7 +47,7 @@ SDD 방법론(`process.md`)의 단계에서 스택마다 달라지는 값이다.
 | `src/types/` | 여러 레이어가 함께 쓰는 도메인 모델·타입 | |
 | `src/errors/` | `AppError`, `ErrorCode` (아래 "Error Handling") | |
 | `src/App.tsx`, `src/main.tsx` | 엔트리포인트, 라우팅, 최상위 Provider·ErrorBoundary 등록 | |
-| `scripts/` | 빌드 타임 스크립트(데이터 생성 등). 생성 결과는 손으로 고치지 않는다 | `src/`의 React 코드 import |
+| `scripts/` | 빌드 타임 스크립트(데이터 생성·검사 등). 앱과 함께 쓰는 타입·순수 로직은 `src/types/`·`src/lib/`에서 import한다. 생성 결과는 손으로 고치지 않는다 | `src/`의 React 코드 import |
 
 - 상태는 `useState`·`useReducer`를 기본으로 한다. 여러 화면이 공유하는 상태가 생기면 Context나 상태 라이브러리 도입을 PLAN에서 결정한다.
 - 외부 SDK(광고, 분석 등)는 `data/<name>Client.ts` 하나로 감싸고, 다른 곳은 그 모듈을 통해서만 쓴다.

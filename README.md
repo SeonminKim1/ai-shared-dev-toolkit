@@ -73,6 +73,14 @@ git submodule add https://github.com/SeonminKim1/ai-shared-dev-toolkit.git .clau
 
 <br>
 
+## 📚 gstack
+
+[gstack](https://github.com/garrytan/gstack) 설치·흐름·연관 프로젝트 정리.
+
+[gstack/README.md](gstack/README.md) 참고
+
+<br>
+
 ## 🔄 업데이트
 
 ```sh
